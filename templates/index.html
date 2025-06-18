@@ -1,0 +1,248 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="./static/images/baumalight-mascot.png"
+      type="image/png"
+    />
+    <title>Baumalight - AI Companion</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <style>
+      /* Add this to your existing styles */
+      .dropdown-item.no-click {
+        pointer-events: none;
+        cursor: default;
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="chatbot-rotation-image" id="chatbot-rotation-image">
+      <img src="/static/images/circleEX.png" />
+    </div>
+    <button class="chat-toggle-btn" id="toggle-chat">
+      <img src="./static/images/baumalight-mascot.png" alt="Chat Icon" />
+    </button>
+    <div class="chatbox chat-container" id="chatbox">
+      <div class="chatbox-header">
+        <div class="chat-title-container">
+          <h5 class="mb-0 small-chat-title">Baumalight AI ChatBot</h5>
+        </div>
+        <div class="close-minimize">
+          <button type="button" id="minimize-chat" class="minimize-btn">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button
+            type="button"
+            id="close-chat"
+            class="btn-close btn-close-white"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+      <div class="baumalight-logo">
+        <img
+          src="./static/images/baumalight-logo.png"
+          alt="baumalight-logo"
+          class="baumalight-image"
+        />
+      </div>
+
+      <div class="chatbox-messages" id="messages">
+        <div class="welcome-container">
+          <div class="message-welcome">Welcome to Baumalight</div>
+          <div class="message-welcome">We are delighted to help you today!</div>
+        </div>
+        <div class="menu-container">
+          <button
+            class="menu-item"
+            onclick="toggleDropdown('whatsNewDropdown')"
+          >
+            What's New
+            <span class="chevron"
+              ><img src="/static/images/dropdown-icon.png" alt="dropdown-icon"
+            /></span>
+          </button>
+          <div id="whatsNewDropdown" class="dropdown-content">
+            <div class="dropdown-item no-click item-large">
+              <img
+                src="/static/images/product-icon-images/augers-icon.png"
+                alt="logo-images"
+                style="width: 70px; height: auto; font-weight: 500"
+              />
+              <br />Upcoming New Product Release
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/excavator-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Discounts and Offers
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/tractor-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Finance Options
+            </div>
+          </div>
+
+          <button
+            class="menu-item"
+            onclick="toggleDropdown('productsDropdown')"
+          >
+            Products
+            <span class="chevron"
+              ><img src="/static/images/dropdown-icon.png" alt="dropdown-icon"
+            /></span>
+          </button>
+          <div
+            id="productsDropdown"
+            class="dropdown-content"
+            style="max-height: 160px"
+          >
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/skidsteer-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Mini Skidsteers
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/augers-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Stump Grinders
+            </div>
+            <div class="dropdown-item">
+              <img
+                src="/static/images/product-icon-images/generators-icon.png"
+                alt="logo-images"
+                style="
+                  width: 30px;
+                  height: auto;
+                  font-weight: 500;
+                  cursor: pointer;
+                "
+              /><br />Generator
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/dumpers-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Dumper
+            </div>
+          </div>
+
+          <button
+            class="menu-item"
+            onclick="toggleDropdown('attachmentsDropdown')"
+          >
+            Attachments
+            <span class="chevron"
+              ><img src="/static/images/dropdown-icon.png" alt="dropdown-icon"
+            /></span>
+          </button>
+          <div id="attachmentsDropdown" class="dropdown-content">
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/excavator-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Excavators
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/tractor-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Tractors
+            </div>
+            <div class="dropdown-item no-click">
+              <img
+                src="/static/images/product-icon-images/skidsteer-icon.png"
+                alt="logo-images"
+                style="width: 30px; height: auto; font-weight: 500"
+              /><br />Skidsteers
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="message-loader" id="message-loader" style="display: none">
+        <div class="chat-bubble">
+          <div class="typing">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+      <div id="messages" class="message-container"></div>
+      <div class="clear-popup" style="display: none">
+        <div class="clear-conversation-popup">
+          <div class="popup-content">
+            <p class="clear-conversation">Clear conversation</p>
+            <p class="display-clear-conversation-message">
+              All messages in the chat will be cleared. Would you like to clear
+              this conversation?
+            </p>
+            <div class="popup-actions">
+              <div class="clear-buttons">
+                <button class="cancel-btn">Cancel</button>
+                <button class="clear-btn">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chatbox-input">
+        <input type="text" id="message-input" placeholder="Ask a question" />
+        <button id="send-button">
+          <img src="./static/images/send.png" alt="" class="send-icon" />
+        </button>
+      </div>
+
+      <div class="acufore-trademark">
+        <a
+          href="https://www.acufore.com/analytics-data"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: black;
+            font-weight: 400;
+          "
+          >Powered by Acufore&reg;</a
+        >
+        <img
+          src="./static/images/acufore-favicon.png"
+          alt="acufore-favicon"
+          class="acufore-favicon"
+        />
+      </div>
+    </div>
+
+    <script src="/static/javascript/index.js"></script>
+  </body>
+</html>

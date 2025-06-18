@@ -1,0 +1,244 @@
+{
+  "general_answers": [
+    {
+      "category": "Product Information",
+      "qa_pairs": [
+        {
+          "question": "What types of generators do you offer?",
+          "answer": "We offer three main series of generators: TX Series for versatile applications, KR Series for heavy-duty use, and QC Series available in both single-phase and three-phase configurations."
+        },
+        {
+          "question": "How do I choose the right generator?",
+          "answer": "To choose the right generator, consider these key factors: required power output (KW), voltage requirements (single or three-phase), application type (continuous or standby), and installation environment. We can help you calculate your specific needs."
+        },
+        {
+          "question": "What are the differences between your generator series?",
+          "answer": "The TX Series offers versatile solutions for general applications, featuring compact design and easy installation. The KR Series is engineered for heavy-duty industrial use with enhanced durability and higher power output. The QC Series specializes in precise power delivery with multiple voltage options in both single and three-phase configurations."
+        },
+        {
+          "question": "What safety features are included?",
+          "answer": "Our generators include multiple safety features: automatic shutdown for overload protection, temperature monitoring, low oil pressure detection, short circuit protection, and emergency stop buttons. All models comply with relevant safety standards and certifications."
+        }
+      ]
+    },
+    {
+      "category": "Technical Support",
+      "qa_pairs": [
+        {
+          "question": "What maintenance is required?",
+          "answer": "Regular maintenance includes oil changes, filter replacements, and general inspections. The specific schedule depends on your generator model and usage pattern. All our generators come with detailed maintenance guidelines."
+        },
+        {
+          "question": "What warranty coverage is provided?",
+          "answer": "Our generators come with comprehensive warranty coverage. Standard warranty includes parts and labor for manufacturing defects. Extended warranty options are available for additional protection."
+        },
+        {
+          "question": "How often should I service my generator?",
+          "answer": "Service intervals depend on usage patterns and model type. Generally, we recommend: monthly test runs, oil changes every 100-200 operating hours, annual professional inspections, and filter replacements as specified in your model's manual. Heavy-duty applications may require more frequent servicing."
+        },
+        {
+          "question": "What should I do if my generator isn't starting?",
+          "answer": "First, check basic elements: fuel level, battery condition, oil level, and circuit breakers. Ensure all connections are secure and emergency stop buttons are released. If these checks don't resolve the issue, contact our technical support or your local dealer for professional diagnosis."
+        }
+      ]
+    },
+    {
+      "category": "Installation",
+      "qa_pairs": [
+        {
+          "question": "How is installation handled?",
+          "answer": "Installation can be performed by our certified dealers or qualified contractors. We provide detailed installation guides and technical support. The process typically includes site preparation, mounting, electrical connections, and testing."
+        },
+        {
+          "question": "What are the site requirements for installation?",
+          "answer": "Site requirements include: adequate ventilation, proper foundation or mounting surface, appropriate clearance for maintenance access, protection from weather elements, and compliance with local codes. Specific requirements vary by model and installation type (indoor/outdoor)."
+        },
+        {
+          "question": "Do you offer installation services?",
+          "answer": "Yes, we offer professional installation services through our network of certified installers. Services include site assessment, installation planning, physical installation, electrical connections, testing, and commissioning. We also provide training for your personnel."
+        }
+      ]
+    },
+    {
+      "category": "Purchasing",
+      "qa_pairs": [
+        {
+          "question": "Where can I buy your generators?",
+          "answer": "Our generators are available through our network of authorized dealers. We can help you locate the nearest dealer to your location. Each dealer can provide detailed product information, pricing, and support."
+        },
+        {
+          "question": "What financing options are available?",
+          "answer": "We offer various financing options including leasing, equipment financing, and flexible payment plans through our financial partners. Terms and availability vary based on location and business requirements. Our dealers can provide detailed information about available options."
+        }
+      ]
+    },
+    {
+      "category": "Environmental and Efficiency",
+      "qa_pairs": [
+        {
+          "question": "How energy efficient are your generators?",
+          "answer": "Our generators are designed for optimal fuel efficiency and performance. Each series features advanced engine management systems, precise voltage regulation, and eco-friendly operation modes. Specific efficiency ratings vary by model and are available in product specifications."
+        },
+        {
+          "question": "What are your environmental compliance standards?",
+          "answer": "Our generators meet or exceed current environmental regulations including emissions standards and noise restrictions. We continuously update our designs to incorporate the latest environmental protection technologies and sustainable practices."
+        }
+      ]
+    },
+    {
+      "category": "Emergency Support",
+      "qa_pairs": [
+        {
+          "question": "What emergency support do you offer?",
+          "answer": "We provide 24/7 emergency support through our dealer network and technical support team. This includes emergency troubleshooting, rapid response service calls, and priority parts delivery for critical situations."
+        },
+        {
+          "question": "How quickly can you respond to an emergency?",
+          "answer": "Response times vary by location and dealer availability. Our emergency service network aims to provide initial response within 1-2 hours and on-site support as quickly as possible. Priority service agreements are available for critical applications."
+        }
+      ]
+    },
+    {
+      "category": "Performance and Specifications",
+      "qa_pairs": [
+        {
+          "question": "What is the expected lifespan of your generators?",
+          "answer": "With proper maintenance, our generators are designed to last 15-20 years or more. The TX and KR series are built with industrial-grade components for extended durability. Actual lifespan depends on usage patterns, maintenance adherence, and environmental conditions."
+        },
+        {
+          "question": "What is the noise level of your generators?",
+          "answer": "Our generators are designed for quiet operation. Standard models operate between 65-75 dB at 7 meters, while our low-noise variants can achieve levels as low as 60 dB. Sound-attenuated enclosures and additional noise reduction options are available for noise-sensitive applications."
+        },
+        {
+          "question": "What is the fuel consumption rate?",
+          "answer": "Fuel consumption varies by model and load level. Our generators feature advanced fuel management systems for optimal efficiency. At 75% load, consumption typically ranges from 0.3 to 0.5 liters per kWh. Exact rates are available in each model's specifications."
+        }
+      ]
+    },
+    {
+      "category": "Customization and Special Applications",
+      "qa_pairs": [
+        {
+          "question": "Can generators be customized for specific applications?",
+          "answer": "Yes, we offer customization options including special voltage configurations, enhanced weather protection, remote monitoring systems, custom control panels, and application-specific modifications. Our engineering team can work with you to meet specific requirements."
+        },
+        {
+          "question": "Do you offer parallel operation capabilities?",
+          "answer": "Yes, many of our models support parallel operation, allowing multiple generators to work together for increased power output or redundancy. This feature is available across our TX and KR series, with advanced synchronization controls and load-sharing capabilities."
+        },
+        {
+          "question": "How long can the generator store runtime data?",
+          "answer": "Yes, many of our models support parallel operation, allowing multiple generators to work together for increased power output or redundancy. This feature is available across our TX and KR series, with advanced synchronization controls and load-sharing capabilities."
+        }
+      ]
+    },
+    {
+      "category": "Training and Education",
+      "qa_pairs": [
+        {
+          "question": "What training do you provide?",
+          "answer": "We offer comprehensive training programs including operator training, maintenance training, and emergency response training. Sessions can be conducted on-site or at our training centers. Custom training programs are available for specific applications or requirements."
+        },
+        {
+          "question": "Are there resources for self-learning?",
+          "answer": "Yes, we provide extensive self-learning resources including detailed manuals, video tutorials, troubleshooting guides, and online knowledge base. Our technical documentation covers operation, maintenance, and basic troubleshooting procedures."
+        }
+      ]
+    },
+    {
+      "category": "Compliance and Certification",
+      "qa_pairs": [
+        {
+          "question": "What certifications do your generators have?",
+          "answer": "Our generators meet multiple international standards including UL, CSA, CE, and ISO certifications. They comply with electrical safety standards, emissions regulations, and industry-specific requirements. Specific certifications vary by model and intended market."
+        },
+        {
+          "question": "Do you meet specific industry standards?",
+          "answer": "Yes, our generators meet various industry-specific standards including healthcare (NFPA 110), data center (Uptime Institute), and industrial (IEEE) requirements. We can provide detailed compliance documentation for your specific industry needs."
+        }
+      ]
+    },
+    {
+      "category": "Remote Monitoring and Control",
+      "qa_pairs": [
+        {
+          "question": "What remote monitoring capabilities are available?",
+          "answer": "We offer advanced remote monitoring systems including real-time performance tracking, automated alerts, predictive maintenance notifications, and remote control capabilities. Our systems support mobile and web interfaces, and integration with building management systems."
+        },
+        {
+          "question": "Can I monitor multiple generators from one system?",
+          "answer": "Yes, our monitoring platform supports fleet management, allowing you to monitor and control multiple generators from a single interface. Features include consolidated reporting, comparative analysis, and centralized maintenance scheduling."
+        }
+      ]
+    },
+    {
+      "category": "Technical Specifications",
+      "qa_pairs": [
+        {
+          "question": "What are the voltage regulation specifications?",
+          "answer": "Our generators maintain voltage regulation within ±0.5% for steady state and ±1% for load variations. The TX and KR series feature digital voltage regulators with precision control. QC series offers enhanced regulation of ±0.25% for sensitive applications."
+        },
+        {
+          "question": "What are the frequency stability specifications?",
+          "answer": "Frequency stability is maintained at ±0.25% for steady state operation. Under varying loads, our generators maintain frequency within ±0.5%. Electronic governors provide precise speed control with isochronous operation available for critical applications."
+        },
+        {
+          "question": "What are the temperature operating ranges?",
+          "answer": "Standard models operate efficiently in ambient temperatures from -20°C to +50°C (-4°F to +122°F). Arctic packages available for operation down to -40°C (-40°F), and tropical variants for up to +55°C (+131°F). All models include temperature monitoring and protection systems."
+        }
+      ]
+    },
+    {
+      "category": "Industry-Specific Solutions",
+      "qa_pairs": [
+        {
+          "question": "What solutions do you offer for healthcare facilities?",
+          "answer": "Our healthcare solutions meet NFPA 110 Level 1 requirements, featuring 10-second start-up capability, advanced transfer switches, and redundant systems. We offer specific models for hospitals, clinics, and medical facilities with options for emergency power supply systems (EPSS)."
+        },
+        {
+          "question": "What options do you have for industrial manufacturing?",
+          "answer": "Our industrial solutions handle high starting loads, motor starting requirements, and continuous duty operation. Features include enhanced short circuit capability, load acceptance management, and options for dusty or harsh environments."
+        }
+      ]
+    },
+    {
+      "category": "Power Quality and Protection",
+      "qa_pairs": [
+        {
+          "question": "What harmonic distortion levels do your generators maintain?",
+          "answer": "Total Harmonic Distortion (THD) is maintained below 3% for balanced linear loads. For non-linear loads, we offer enhanced excitation systems keeping THD below 5%. Special low-harmonic models available for sensitive electronic loads."
+        },
+        {
+          "question": "What protection systems are included?",
+          "answer": "Standard protection includes overcurrent, short circuit, reverse power, under/over voltage, under/over frequency, and ground fault protection. Advanced models feature differential protection, loss of excitation protection, and integrated arc flash protection."
+        }
+      ]
+    },
+    {
+      "category": "Maintenance and Service Life",
+      "qa_pairs": [
+        {
+          "question": "What is the recommended maintenance schedule?",
+          "answer": "Daily: Visual inspections and fluid checks. Weekly: Load testing and general cleaning. Monthly: Battery maintenance and connection checks. Quarterly: Oil and filter changes (usage dependent). Annual: Comprehensive inspection and testing by certified technicians."
+        },
+        {
+          "question": "What is the expected service life of major components?",
+          "answer": "Engine: 15,000-20,000 operating hours before major overhaul. Alternator: 20,000-25,000 hours. Control systems: 10-15 years. Actual service life varies based on operating conditions, load profiles, and maintenance adherence."
+        }
+      ]
+    },
+    {
+      "category": "Integration and Connectivity",
+      "qa_pairs": [
+        {
+          "question": "What building management system integrations are supported?",
+          "answer": "We support major BMS protocols including Modbus, BACnet, and SNMP. Our systems integrate with leading platforms like Johnson Controls, Honeywell, and Siemens. Custom integration solutions available for specific requirements."
+        },
+        {
+          "question": "What data analytics capabilities are available?",
+          "answer": "Our analytics platform provides predictive maintenance insights, performance optimization recommendations, and efficiency tracking. Features include trend analysis, custom reporting, and real-time performance dashboards."
+        }
+      ]
+    }
+  ]
+}

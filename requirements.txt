@@ -1,0 +1,15 @@
+fastapi
+openai==0.28
+pymupdf
+uvicorn
+jinja2
+python-multipart
+aiofiles
+faiss-cpu
+tiktoken
+matplotlib
+plotly
+scipy
+scikit-learn
+tenacity
+python-dotenv

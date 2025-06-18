@@ -1,0 +1,318 @@
+2025-04-30 10:42:41,610 - hypercorn.error - INFO - Running on http://127.0.0.1:8000 (CTRL + C to quit)
+2025-04-30 10:42:45,647 - chatbot - INFO - Received question: give me a recommendation from the data that I have given for a generator of 50kW
+2025-04-30 10:42:45,648 - chatbot - INFO - Max results: 3, Include sources: True
+2025-04-30 10:42:45,648 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:42:46,283 - openai - INFO - error_code=None error_message="You didn't provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you're accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys." error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+2025-04-30 10:42:46,284 - chatbot - ERROR - Error processing request: You didn't provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY), or as the password field (with blank username) if you're accessing the API from your browser and are prompted for a username and password. You can obtain an API key from https://platform.openai.com/account/api-keys.
+2025-04-30 10:43:15,056 - asyncio - ERROR - Accept failed on a socket
+socket: <asyncio.TransportSocket fd=540, family=2, type=1, proto=6, laddr=('127.0.0.1', 8000)>
+Traceback (most recent call last):
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 860, in loop
+    f = self._proactor.accept(sock)
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 550, in accept
+    self._register_with_iocp(listener)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 710, in _register_with_iocp
+    _overlapped.CreateIoCompletionPort(obj.fileno(), self._iocp, 0, 0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 87] The parameter is incorrect
+2025-04-30 10:43:15,064 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<Lifespan.handle_lifespan() done, defined at C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py:42> exception=LifespanFailureError('Lifespan failure in shutdown. \'Traceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 234, in _run\n    runner.run(main(shutdown_trigger=shutdown_trigger))\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py", line 721, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 136, in worker_serve\n    bind = repr_socket_addr(sock.family, sock.getsockname())\n                                         ~~~~~~~~~~~~~~~~^^\nOSError: [WinError 10038] An operation was attempted on something that is not a socket\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\starlette\\routing.py", line 699, in lifespan\n    await receive()\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\lifespan.py", line 110, in asgi_receive\n    return await self.app_queue.get()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\queues.py", line 186, in get\n    await getter\nasyncio.exceptions.CancelledError\n\'')>
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 55, in handle_lifespan
+    await self.app(
+    ...<5 lines>...
+    )
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\app_wrappers.py", line 34, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\cors.py", line 77, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\exceptions.py", line 48, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 723, in app
+    await self.lifespan(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 703, in lifespan
+    await send({"type": "lifespan.shutdown.failed", "message": exc_text})
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 122, in asgi_send
+    raise LifespanFailureError("shutdown", message.get("message", ""))
+hypercorn.utils.LifespanFailureError: Lifespan failure in shutdown. 'Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+'
+2025-04-30 10:43:22,256 - hypercorn.error - INFO - Running on http://127.0.0.1:8000 (CTRL + C to quit)
+2025-04-30 10:43:22,506 - chatbot - INFO - Received question: give me a recommendation from the data that I have given for a generator of 50kW
+2025-04-30 10:43:22,507 - chatbot - INFO - Max results: 3, Include sources: True
+2025-04-30 10:43:22,507 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:43:36,250 - chatbot - INFO - Token usage - Input: 3799, Output: 485, Search: 551, Total: 4835
+2025-04-30 10:43:36,255 - chatbot - INFO - Received question: give me a recommendation from the data that I have given for a generator of 50kW
+2025-04-30 10:43:36,255 - chatbot - INFO - Max results: 3, Include sources: True
+2025-04-30 10:43:36,255 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:43:45,927 - chatbot - INFO - Token usage - Input: 3799, Output: 323, Search: 551, Total: 4673
+2025-04-30 10:44:16,628 - asyncio - ERROR - Accept failed on a socket
+socket: <asyncio.TransportSocket fd=556, family=2, type=1, proto=6, laddr=('127.0.0.1', 8000)>
+Traceback (most recent call last):
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 860, in loop
+    f = self._proactor.accept(sock)
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 550, in accept
+    self._register_with_iocp(listener)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 710, in _register_with_iocp
+    _overlapped.CreateIoCompletionPort(obj.fileno(), self._iocp, 0, 0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 87] The parameter is incorrect
+2025-04-30 10:44:16,637 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<Lifespan.handle_lifespan() done, defined at C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py:42> exception=LifespanFailureError('Lifespan failure in shutdown. \'Traceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 234, in _run\n    runner.run(main(shutdown_trigger=shutdown_trigger))\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py", line 721, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 136, in worker_serve\n    bind = repr_socket_addr(sock.family, sock.getsockname())\n                                         ~~~~~~~~~~~~~~~~^^\nOSError: [WinError 10038] An operation was attempted on something that is not a socket\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\starlette\\routing.py", line 699, in lifespan\n    await receive()\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\lifespan.py", line 110, in asgi_receive\n    return await self.app_queue.get()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\queues.py", line 186, in get\n    await getter\nasyncio.exceptions.CancelledError\n\'')>
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 55, in handle_lifespan
+    await self.app(
+    ...<5 lines>...
+    )
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\app_wrappers.py", line 34, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\cors.py", line 77, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\exceptions.py", line 48, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 723, in app
+    await self.lifespan(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 703, in lifespan
+    await send({"type": "lifespan.shutdown.failed", "message": exc_text})
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 122, in asgi_send
+    raise LifespanFailureError("shutdown", message.get("message", ""))
+hypercorn.utils.LifespanFailureError: Lifespan failure in shutdown. 'Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+'
+2025-04-30 10:44:39,595 - hypercorn.error - INFO - Running on http://127.0.0.1:8000 (CTRL + C to quit)
+2025-04-30 10:44:42,689 - chatbot - INFO - Received question: give me a recommendation from the data that I have given for a generator of 50kW
+2025-04-30 10:44:42,689 - chatbot - INFO - Max results: 3, Include sources: True
+2025-04-30 10:44:42,690 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:44:46,576 - chatbot - INFO - Token usage - Input: 3746, Output: 173, Search: 551, Total: 4470
+2025-04-30 10:45:47,750 - chatbot - INFO - Received question: give me a recommendation for a generator of 50kW and 3 phase, compare with other models.
+2025-04-30 10:45:47,750 - chatbot - INFO - Max results: 3, Include sources: True
+2025-04-30 10:45:47,750 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:45:54,069 - chatbot - INFO - Token usage - Input: 3749, Output: 300, Search: 551, Total: 4600
+2025-04-30 10:49:00,232 - asyncio - ERROR - Accept failed on a socket
+socket: <asyncio.TransportSocket fd=440, family=2, type=1, proto=6, laddr=('127.0.0.1', 8000)>
+Traceback (most recent call last):
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 860, in loop
+    f = self._proactor.accept(sock)
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 550, in accept
+    self._register_with_iocp(listener)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 710, in _register_with_iocp
+    _overlapped.CreateIoCompletionPort(obj.fileno(), self._iocp, 0, 0)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 87] The parameter is incorrect
+2025-04-30 10:49:00,242 - asyncio - ERROR - unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<Lifespan.handle_lifespan() done, defined at C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py:42> exception=LifespanFailureError('Lifespan failure in shutdown. \'Traceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 234, in _run\n    runner.run(main(shutdown_trigger=shutdown_trigger))\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py", line 118, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py", line 721, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\run.py", line 136, in worker_serve\n    bind = repr_socket_addr(sock.family, sock.getsockname())\n                                         ~~~~~~~~~~~~~~~~^^\nOSError: [WinError 10038] An operation was attempted on something that is not a socket\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\starlette\\routing.py", line 699, in lifespan\n    await receive()\n  File "C:\\Projects\\openai chatbot backend\\env\\Lib\\site-packages\\hypercorn\\asyncio\\lifespan.py", line 110, in asgi_receive\n    return await self.app_queue.get()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\aniru\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\queues.py", line 186, in get\n    await getter\nasyncio.exceptions.CancelledError\n\'')>
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 55, in handle_lifespan
+    await self.app(
+    ...<5 lines>...
+    )
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\app_wrappers.py", line 34, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\errors.py", line 152, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\cors.py", line 77, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\middleware\exceptions.py", line 48, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 723, in app
+    await self.lifespan(scope, receive, send)
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 703, in lifespan
+    await send({"type": "lifespan.shutdown.failed", "message": exc_text})
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 122, in asgi_send
+    raise LifespanFailureError("shutdown", message.get("message", ""))
+hypercorn.utils.LifespanFailureError: Lifespan failure in shutdown. 'Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 234, in _run
+    runner.run(main(shutdown_trigger=shutdown_trigger))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\run.py", line 136, in worker_serve
+    bind = repr_socket_addr(sock.family, sock.getsockname())
+                                         ~~~~~~~~~~~~~~~~^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\starlette\routing.py", line 699, in lifespan
+    await receive()
+  File "C:\Projects\openai chatbot backend\env\Lib\site-packages\hypercorn\asyncio\lifespan.py", line 110, in asgi_receive
+    return await self.app_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\aniru\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+'
+2025-04-30 10:50:00,910 - hypercorn.error - INFO - Running on http://127.0.0.1:8000 (CTRL + C to quit)
+2025-04-30 10:50:31,018 - chatbot - INFO - Received question: Give me a recommendation for 50kW generator with 2 phase. Compare with other models.
+2025-04-30 10:50:31,018 - chatbot - INFO - Max results: 2, Include sources: True
+2025-04-30 10:50:31,018 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:50:34,706 - chatbot - INFO - Token usage - Input: 3747, Output: 200, Search: 549, Total: 4496
+2025-04-30 10:51:18,224 - chatbot - INFO - Received question: Give me a recommendation for 20kW generator with 2 phase. Compare with other models.
+2025-04-30 10:51:18,224 - chatbot - INFO - Max results: 2, Include sources: True
+2025-04-30 10:51:18,224 - chatbot - WARNING - Directory product_files not found. Falling back to product.txt
+2025-04-30 10:51:23,109 - chatbot - INFO - Token usage - Input: 3747, Output: 200, Search: 549, Total: 4496

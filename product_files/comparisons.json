@@ -1,0 +1,1055 @@
+{
+  "QC Models": {
+    "QC 12": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 12,
+        "Momentary Surge KW": 25,
+        "50% Load (HP)": "9HP",
+        "100% Load (HP)": "21HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 50,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 645,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 10224.0,
+        "discountUSDPrice": 9404.05,
+        "CADPrice": 13700.16,
+        "discountCADPrice": 12604.15,
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 19": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 19,
+        "Momentary Surge KW": 35,
+        "50% Load (HP)": "16HP",
+        "100% Load (HP)": "34HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 90,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 685,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 11220.0,
+        "discountUSDPrice": 10322.4,
+        "CADPrice": 15034.8,
+        "discountCADPrice": 13832.02,
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 30": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 30,
+        "Momentary Surge KW": 85,
+        "50% Load (HP)": "20HP",
+        "100% Load (HP)": "49HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 125,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 725,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 12945.0,
+        "discountUSDPrice": 11909.4,
+        "CADPrice": 17346.3,
+        "discountCADPrice": 15958.6,
+        "leadTime": "First order: 7 business days; Next order: 3 months",
+        "lead time": "First order: 7 business days; Next order: 3 months"
+      }
+    },
+    "QC 45": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 45,
+        "Momentary Surge KW": 120,
+        "50% Load (HP)": "31HP",
+        "100% Load (HP)": "75HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 175,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 941,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 2)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 15102.0,
+        "discountUSDPrice": 13893.84,
+        "CADPrice": 20236.68,
+        "discountCADPrice": 18617.75,
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 2); Next order: 3 months"
+      }
+    },
+    "QC 55": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 55,
+        "Momentary Surge KW": 150,
+        "50% Load (HP)": "42HP",
+        "100% Load (HP)": "89HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 225,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1089,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 17843.0,
+        "discountUSDPrice": 16415.56,
+        "CADPrice": 23909.62,
+        "discountCADPrice": 21996.85,
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 65": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 65,
+        "Momentary Surge KW": 180,
+        "50% Load (HP)": "48HP",
+        "100% Load (HP)": "102HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 250,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1156,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 18240.0,
+        "discountUSDPrice": 16780.8,
+        "CADPrice": 24441.6,
+        "discountCADPrice": 22486.27,
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 80": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 80,
+        "Momentary Surge KW": 225,
+        "50% Load (HP)": "55HP",
+        "100% Load (HP)": "122HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 320,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1358,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 19807.0,
+        "discountUSDPrice": 18222.44,
+        "CADPrice": 26541.38,
+        "discountCADPrice": 24418.07,
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 100": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 100,
+        "Momentary Surge KW": 300,
+        "50% Load (HP)": "71HP",
+        "100% Load (HP)": "153HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 400,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1450,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 2)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 3 months"
+      },
+      "values": {
+        "USDPrice": 21719.0,
+        "discountUSDPrice": 19981.48,
+        "CADPrice": 29103.46,
+        "discountCADPrice": 26775.18,
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 2); Next order: 3 months"
+      }
+    },
+    "QC 30-2": {
+      "details": {
+        "Connection": "Parallel Low WYE",
+        "KW": 30,
+        "Momentary Surge KW": 85,
+        "50% Load (HP)": "20HP",
+        "100% Load (HP)": "49HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 208,
+        "Volts": "120/208",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 100,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 779,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 45-2": {
+      "details": {
+        "Connection": "Parallel Low WYE",
+        "KW": 45,
+        "Momentary Surge KW": 120,
+        "50% Load (HP)": "31HP",
+        "100% Load (HP)": "75HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 208,
+        "Volts": "120/208",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 150,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 980,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 7 business days; Next order: 3 months",
+        "lead time": "First order: 7 business days; Next order: 3 months"
+      }
+    },
+    "QC 68-2": {
+      "details": {
+        "Connection": "Parallel Low WYE",
+        "KW": 68,
+        "Momentary Surge KW": 190,
+        "50% Load (HP)": "50HP",
+        "100% Load (HP)": "105HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 208,
+        "Volts": "120/208",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 250,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1159,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 105-2": {
+      "details": {
+        "Connection": "Parallel Low WYE",
+        "KW": 105,
+        "Momentary Surge KW": 315,
+        "50% Load (HP)": "72HP",
+        "100% Load (HP)": "155HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": 208,
+        "Volts": "120/208",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 400,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1474,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 30-3": {
+      "details": {
+        "Connection": "Series High Delta",
+        "KW": 30,
+        "Momentary Surge KW": 85,
+        "50% Load (HP)": "20HP",
+        "100% Load (HP)": "49HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 90,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 779,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 45-3": {
+      "details": {
+        "Connection": "Series High Delta",
+        "KW": 45,
+        "Momentary Surge KW": 120,
+        "50% Load (HP)": "31HP",
+        "100% Load (HP)": "75HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 150,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 980,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 7 business days; Next order: 3 months",
+        "lead time": "First order: 7 business days; Next order: 3 months"
+      }
+    },
+    "QC 68-3": {
+      "details": {
+        "Connection": "Series High Delta",
+        "KW": 68,
+        "Momentary Surge KW": 190,
+        "50% Load (HP)": "50HP",
+        "100% Load (HP)": "105HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 225,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1159,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 105-3": {
+      "details": {
+        "Connection": "Series High Delta",
+        "KW": 105,
+        "Momentary Surge KW": 315,
+        "50% Load (HP)": "72HP",
+        "100% Load (HP)": "155HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 320,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1474,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 7 business days; Next order: 3 months",
+        "lead time": "First order: 7 business days; Next order: 3 months"
+      }
+    },
+    "QC 30-4": {
+      "details": {
+        "Connection": "Series High WYE",
+        "KW": 33,
+        "Momentary Surge KW": 85,
+        "50% Load (HP)": "20HP",
+        "100% Load (HP)": "49HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "277/480",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 50,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 779,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "3 months",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 3 months; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 3 months; Next order: 3 months",
+        "lead time": "First order: 3 months; Next order: 3 months"
+      }
+    },
+    "QC 45-4": {
+      "details": {
+        "Connection": "Series High WYE",
+        "KW": 50,
+        "Momentary Surge KW": 120,
+        "50% Load (HP)": "31HP",
+        "100% Load (HP)": "75HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "277/480",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 70,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 980,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 68-4": {
+      "details": {
+        "Connection": "Series High WYE",
+        "KW": 76,
+        "Momentary Surge KW": 190,
+        "50% Load (HP)": "50HP",
+        "100% Load (HP)": "105HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "277/480",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 125,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1159,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 3 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 3 months"
+      }
+    },
+    "QC 105-4": {
+      "details": {
+        "Connection": "Series High WYE",
+        "KW": 113,
+        "Momentary Surge KW": 315,
+        "50% Load (HP)": "72HP",
+        "100% Load (HP)": "155HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "277/480",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 150,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1474,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "3 months",
+        "location": "",
+        "notes": "Expect 10 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 3 months"
+      },
+      "values": {
+        "leadTime": "First order: 7 business days; Next order: 3 months",
+        "lead time": "First order: 7 business days; Next order: 3 months"
+      }
+    },
+    "QC 27-6": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 27,
+        "Momentary Surge KW": 45,
+        "50% Load (HP)": "18HP",
+        "100% Load (HP)": "47HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "347/600",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 35,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 779,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "4 months",
+        "leadTimeNextOrder": "4 months",
+        "location": "",
+        "notes": "Expect 15 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 4 months; Next order: 4 months"
+      },
+      "values": {
+        "leadTime": "First order: 4 months; Next order: 4 months",
+        "lead time": "First order: 4 months; Next order: 4 months"
+      }
+    },
+    "QC 50-6": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 50,
+        "Momentary Surge KW": 130,
+        "50% Load (HP)": "35HP",
+        "100% Load (HP)": "80HP",
+        "Tractor RPM": 540,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "347/600",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 60,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1010,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 1)",
+        "leadTimeNextOrder": "4 months",
+        "location": "",
+        "notes": "Expect 15 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 4 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 1); Next order: 4 months",
+        "lead time": "First order: Stock  (Available Stock : 1); Next order: 4 months"
+      }
+    },
+    "QC 75-6": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 75,
+        "Momentary Surge KW": 200,
+        "50% Load (HP)": "52HP",
+        "100% Load (HP)": "110HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "347/600",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 90,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1175,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 2)",
+        "leadTimeNextOrder": "4 months",
+        "location": "",
+        "notes": "Expect 15 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 4 months"
+      },
+      "values": {
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 4 months",
+        "lead time": "First order: Stock  (Available Stock : 2); Next order: 4 months"
+      }
+    },
+    "QC 100-6": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 100,
+        "Momentary Surge KW": 300,
+        "50% Load (HP)": "71HP",
+        "100% Load (HP)": "153HP",
+        "Tractor RPM": 1000,
+        "Welder Receipt Voltage (50 amp)": "n/a",
+        "Volts": "347/600",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 150,
+        "Phase": 3
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1474,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "4 months",
+        "leadTimeNextOrder": "4 months",
+        "location": "",
+        "notes": "Expect 15 week lead time on 8week8% orders",
+        "discountDescription": "",
+        "leadTime": "First order: 4 months; Next order: 4 months"
+      },
+      "values": {
+        "leadTime": "First order: 4 months; Next order: 4 months",
+        "lead time": "First order: 4 months; Next order: 4 months"
+      }
+    }
+  },
+  "KR Models": {
+    "KR30": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 30,
+        "Momentary Surge KW": 85,
+        "50% Load (HP)": 23,
+        "100% Load (HP)": 45,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 125,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 750,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 5)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "$8,000 + freight for floor model unit with Independent Repping if invoiced before May 26 (discount available in USA only)",
+        "leadTime": "First order: Stock  (Available Stock : 5); Next order: 7 business days"
+      },
+      "values": {
+        "discountUSDPrice": 8185.24,
+        "USDPrice": 8897.0,
+        "CADPrice": 11922.0,
+        "discountCADPrice": 10968.22,
+        "leadTime": "First order: Stock  (Available Stock : 5); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 5); Next order: 7 business days"
+      }
+    },
+    "KR44": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 44,
+        "Momentary Surge KW": 115,
+        "50% Load (HP)": 34,
+        "100% Load (HP)": 65,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 175,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 990,
+        "discountAvailable": true,
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "8Week8% orders will be better than QC",
+        "discountDescription": "",
+        "leadTime": "First order: First order: 7 business days; Next order: 7 business days; Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 10766.0,
+        "discountUSDPrice": 9904.72,
+        "CADPrice": 14426.44,
+        "discountCADPrice": 13272.32,
+        "leadTime": "First order: First order: 7 business days; Next order: 7 business days; Next order: 7 business days",
+        "lead time": "First order: First order: 7 business days; Next order: 7 business days; Next order: 7 business days"
+      }
+    },
+    "KR52": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 52,
+        "Momentary Surge KW": 140,
+        "50% Load (HP)": 39,
+        "100% Load (HP)": 76,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 225,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1060,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "7 business days",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "8Week8% orders will be better than QC",
+        "discountDescription": "",
+        "leadTime": "First order: 7 business days; Next order: 7 business days"
+      },
+      "values": {
+        "discountUSDPrice": 10700.52,
+        "USDPrice": 11631.0,
+        "CADPrice": 15585.54,
+        "discountCADPrice": 14338.7,
+        "leadTime": "First order: 7 business days; Next order: 7 business days",
+        "lead time": "First order: 7 business days; Next order: 7 business days"
+      }
+    },
+    "KR65": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 65,
+        "Momentary Surge KW": 180,
+        "50% Load (HP)": 52,
+        "100% Load (HP)": 97,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 4,
+        "Internal RPM": 1800,
+        "Full Output Amps (Main Breaker)": 250,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 1210,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 2)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "8Week8% orders will be better than QC",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 13277.0,
+        "discountUSDPrice": 12214.84,
+        "CADPrice": 17791.18,
+        "discountCADPrice": 16367.89,
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 2); Next order: 7 business days"
+      }
+    }
+  },
+  "TX Models": {
+    "TX7": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 7,
+        "Momentary Surge KW": 14,
+        "50% Load (HP)": 5,
+        "100% Load (HP)": 11,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 2,
+        "Internal RPM": 3600,
+        "Full Output Amps (Main Breaker)": 30,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 300,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 3)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 3); Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 2931.0,
+        "discountUSDPrice": 2696.52,
+        "CADPrice": 3927.54,
+        "discountCADPrice": 3613.34,
+        "leadTime": "First order: Stock  (Available Stock : 3); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 3); Next order: 7 business days"
+      }
+    },
+    "TX12": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 12,
+        "Momentary Surge KW": 24,
+        "50% Load (HP)": 10,
+        "100% Load (HP)": 21,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 2,
+        "Internal RPM": 3600,
+        "Full Output Amps (Main Breaker)": 50,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 370,
+        "discountAvailable": true,
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "$3,000+ freight for floor model units with multiple reps if invoiced before May 26 (discount available in USA only)",
+        "leadTime": "First order: First order: Stock  (Available Stock : 11); Next order: 7 business days; Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 3462.0,
+        "discountUSDPrice": 3185.04,
+        "CADPrice": 4639.08,
+        "discountCADPrice": 4267.95,
+        "leadTime": "First order: First order: Stock  (Available Stock : 11); Next order: 7 business days; Next order: 7 business days",
+        "lead time": "First order: First order: Stock  (Available Stock : 11); Next order: 7 business days; Next order: 7 business days"
+      }
+    },
+    "TX18": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 18,
+        "Momentary Surge KW": 37,
+        "50% Load (HP)": 15,
+        "100% Load (HP)": 34,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 2,
+        "Internal RPM": 3600,
+        "Full Output Amps (Main Breaker)": 80,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 474,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 9)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 9); Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 5008.0,
+        "discountUSDPrice": 4607.36,
+        "CADPrice": 6710.72,
+        "discountCADPrice": 6173.86,
+        "leadTime": "First order: Stock  (Available Stock : 9); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 9); Next order: 7 business days"
+      }
+    },
+    "TX25": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 25,
+        "Momentary Surge KW": 50,
+        "50% Load (HP)": 19,
+        "100% Load (HP)": 42,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 2,
+        "Internal RPM": 3600,
+        "Full Output Amps (Main Breaker)": 100,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 563,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 6)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 6); Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 5601.0,
+        "discountUSDPrice": 5152.92,
+        "CADPrice": 7505.34,
+        "discountCADPrice": 6904.91,
+        "leadTime": "First order: Stock  (Available Stock : 6); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 6); Next order: 7 business days"
+      }
+    },
+    "TX31": {
+      "details": {
+        "Connection": "Dedicated",
+        "KW": 31,
+        "Momentary Surge KW": 62,
+        "50% Load (HP)": 22,
+        "100% Load (HP)": 50,
+        "Welder Receipt Voltage (50 amp)": 240,
+        "Volts": "120/240",
+        "Number of Poles": 2,
+        "Internal RPM": 3600,
+        "Full Output Amps (Main Breaker)": 125,
+        "Phase": 1
+      },
+      "description": {
+        "Shipping Weight (lbs.)": 596,
+        "discountAvailable": true,
+        "leadTimeFirstOrder": "Stock  (Available Stock : 2)",
+        "leadTimeNextOrder": "7 business days",
+        "location": "",
+        "notes": "",
+        "discountDescription": "",
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 7 business days"
+      },
+      "values": {
+        "USDPrice": 6332.0,
+        "discountUSDPrice": 5825.44,
+        "CADPrice": 8484.88,
+        "discountCADPrice": 7806.09,
+        "leadTime": "First order: Stock  (Available Stock : 2); Next order: 7 business days",
+        "lead time": "First order: Stock  (Available Stock : 2); Next order: 7 business days"
+      }
+    }
+  },
+  "notes": "* 8% Discount Price applies to eligible orders"
+}

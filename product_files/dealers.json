@@ -1,0 +1,144 @@
+{
+  "dealers": [
+    {
+      "company": "ESM Farm Equipment",
+      "address": "7293 Wellington Rd 86, ON, Canada",
+      "phone": "(519) 669-5176",
+      "email": "sales@esmfarmequipment.com",
+      "location": "N0B 2S0"
+    },
+    {
+      "company": "Shaw Bros. Ltd",
+      "address": "Barrie  ON 99 Hooper Street Unit 3, ON, Canada",
+      "phone": "1 (877) 625-9677",
+      "email": "info@shawbros.ca",
+      "location": "L4N 9S3"
+    },
+    {
+      "company": "Les Entreprises Andre Theriault INC",
+      "address": "St-Mathieu De Beloeil QC 5 Rue Du Pavillon, QC, Canada",
+      "phone": "(514) 953-7199",
+      "email": "theriaultandre1@hotmail.com",
+      "location": "J3G 4S5"
+    },
+    {
+      "company": "Bigfoot Enterprises",
+      "address": "#7-54106 Rge Rd. 275, AB, Canada",
+      "phone": "1 (780) 288-3668",
+      "email": "randy@bigfootenterprises.ca",
+      "location": "T7X 3V3"
+    },
+    {
+      "company": "Apple Farm Service",
+      "address": "10120 West Versailles Rd., OH, USA",
+      "phone": "(765) 732-3081",
+      "email": "timwcc@applefarmservice.com",
+      "location": "45318"
+    },
+    {
+      "company": "E. Bourassa & Sons Ltd",
+      "address": "Box 69  Hwy 28S Hwy 28S, SK, Canada",
+      "phone": "(306) 642-3826",
+      "email": "doug@ebourassa.com",
+      "location": "S0C 2G0"
+    },
+    {
+      "company": "Les Equipments Colpron Inc.",
+      "address": "C.P.40, 5 De La Beauce, QC, Canada",
+      "phone": "(450) 427-2339",
+      "email": "macolpron@colproninc.com",
+      "location": "J0S 1V0"
+    },
+    {
+      "company": "GP AG Distribution",
+      "address": "2862 route 201, QC, Canada",
+      "phone": "(450) 829-4344",
+      "email": "gpagpascal@gmail.com",
+      "location": "J0S 1K0"
+    },
+    {
+      "company": "Equipements TM Inc.",
+      "address": "43 Route 202, QC, Canada",
+      "phone": "(450) 264-7000",
+      "email": "lesequipementstm@outlook.com",
+      "location": "J0S 1H0"
+    },
+    {
+      "company": "Entreprises Sud-Ouest Inc.",
+      "address": "St. Policarpe  QC 437 Chemin Ste-Catherine, QC, Canada",
+      "phone": "(450) 265-3755",
+      "email": "entrepso@rocler.qc.ca",
+      "location": "J0P 1S0"
+    },
+    {
+      "company": "Les Equipments Colpron Inc.",
+      "address": "723, Route 201, QC, Canada",
+      "phone": "(450) 456-3358",
+      "email": "michel@equipementseguin.com",
+      "location": "J0P 1S0"
+    },
+    {
+      "company": "Kubota Montreal",
+      "address": "18980 route Transcanadienne, QC, Canada",
+      "phone": "(514) 457-4333",
+      "email": "morourke@kubotamontreal.com",
+      "location": "H9X 3R1"
+    },
+    {
+      "company": "Top Lift Entreprises Inc. (MTL)",
+      "address": "6557, Ch. Cote de Liesse, QC, Canada",
+      "phone": "(514) 335-2953",
+      "email": "pierre@embmfg.com",
+      "location": "H4T 1E5"
+    },
+    {
+      "company": "Green Tractors INC.",
+      "address": "271429 Poupore Rd PO Box 490, ON, Canada",
+      "phone": "(705) 563-2134",
+      "email": "jbolesworth@greentractors.ca",
+      "location": "P0J 1E0"
+    },
+    {
+      "company": "Tracks & Wheels Equipment",
+      "address": "400 Old Hwy. 69 North PO Box 2592, ON, Canada",
+      "phone": "(705) 566-5438",
+      "email": "jgauvreau@tracksandwheels.com",
+      "location": "P3A 4S9"
+    },
+    {
+      "company": "Kemlee Equipment",
+      "address": "1309 Northwest Blvd., BC, Canada",
+      "phone": "(250) 428-2254",
+      "email": "darrell@kokaneeford.com",
+      "location": "V0B 1G6"
+    },
+    {
+      "company": "Caliber Equipment Ltd.",
+      "address": "34511 Vye Rd., BC, Canada",
+      "phone": "(604) 864-2273",
+      "email": "aron@caliberequipment.ca",
+      "location": "V2S 8J7"
+    },
+    {
+      "company": "Groupe Lafreniere Tracteurs",
+      "address": "938 Boul. Lanaudiere, route 138, QC, Canada",
+      "phone": "1 (418) 325-2446",
+      "email": "tommyc@laftrac.com",
+      "location": "G0X 2J0"
+    },
+    {
+      "company": "Centre Agricole Neuville INC",
+      "address": "991 2eme Rang Est, QC, Canada",
+      "phone": "1 (418) 873-3232",
+      "email": "mtremblay@centreagricole.ca",
+      "location": "G0A 2R0"
+    },
+    {
+      "company": "Claude Joyal Inc.",
+      "address": "682 Route 219, QC, Canada",
+      "phone": "1 (450) 245-3565",
+      "email": "napierville@claudejoyal.com",
+      "location": "J0J 1L0"
+    }
+  ]
+}
