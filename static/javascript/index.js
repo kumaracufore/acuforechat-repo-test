@@ -328,10 +328,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const messageInput = document.getElementById("message-input");
   const sendButton = document.getElementById("send-button");
 
-  messageInput.addEventListener("input", function () {});
+  messageInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendInputMessage();
+    }
+  });
 
   sendButton.addEventListener("click", function () {
     if (messageInput.value) {
+      sendInputMessage();
     }
   });
 });

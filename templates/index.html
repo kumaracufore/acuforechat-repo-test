@@ -63,13 +63,32 @@
           class="baumalight-image"
         />
       </div>
-
+      <div class="acufore-trademark">
+        <a
+          href="https://www.acufore.com/analytics-data"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            font-size: 0.8rem;
+            text-decoration: none;
+            color: black;
+            font-weight: 400;
+          "
+          >Powered by Acufore&reg;</a
+        >
+        <img
+          src="./static/images/acufore-favicon.png"
+          alt="acufore-favicon"
+          class="acufore-favicon"
+        />
+      </div>
       <div class="chatbox-messages" id="messages">
         <div class="welcome-container">
           <div class="message-welcome">Welcome to Baumalight</div>
           <div class="message-welcome">We are delighted to help you today!</div>
         </div>
-        <div class="menu-container">
+
+        <div class="menu-container" style="display: none">
           <button
             class="menu-item"
             onclick="toggleDropdown('whatsNewDropdown')"
@@ -216,30 +235,14 @@
       </div>
 
       <div class="chatbox-input">
-        <input type="text" id="message-input" placeholder="Ask a question" />
+        <textarea
+          id="message-input"
+          placeholder="Ask a question"
+          rows="1"
+        ></textarea>
         <button id="send-button">
           <img src="./static/images/send.png" alt="" class="send-icon" />
         </button>
-      </div>
-
-      <div class="acufore-trademark">
-        <a
-          href="https://www.acufore.com/analytics-data"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            font-size: 0.8rem;
-            text-decoration: none;
-            color: black;
-            font-weight: 400;
-          "
-          >Powered by Acufore&reg;</a
-        >
-        <img
-          src="./static/images/acufore-favicon.png"
-          alt="acufore-favicon"
-          class="acufore-favicon"
-        />
       </div>
     </div>
 
