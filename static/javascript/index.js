@@ -276,8 +276,7 @@ function sendInputMessage() {
   const messageText = input.value.trim();
 
   if (messageText) {
-    const processedMessage = messageText;
-    printInputMessage(processedMessage);
+    addMessage(messageText, true); // Add user message with timestamp
     input.value = "";
 
     showLoader();
@@ -306,7 +305,7 @@ function sendInputMessage() {
               addMessageQuestion(response.Questions, "receiver");
           } catch (error) {
             console.error("Error parsing response:", error);
-            addMessage(data.response, "receiver", "response");
+            addMessage(data.response, false); // Add bot message with timestamp
           }
         } else {
           addMessageDefault("receiver");
@@ -328,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const messageInput = document.getElementById("message-input");
   const sendButton = document.getElementById("send-button");
 
-  messageInput.addEventListener("keydown", function (e) {
+  messageInput.addEventListener("input", function (e) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendInputMessage();

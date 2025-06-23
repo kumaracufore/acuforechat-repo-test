@@ -199,6 +199,8 @@ body {
     margin: 5px 10px;
     padding: 10px;
     font-weight: 400;
+    word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .message-dropdown.sender1 {
