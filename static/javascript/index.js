@@ -173,6 +173,31 @@ function sendMessage(event) {
   if (messageText) {
     addMessage(messageText, "sender", "input");
     input.value = "";
+    input.scrollTop = 0;
+    input.setSelectionRange(0, 0);
+    input.rows = 1;
+    input.style.height = "55px";
+    setTimeout(() => {
+      input.value = "";
+      input.scrollTop = 0;
+      input.setSelectionRange(0, 0);
+      input.rows = 1;
+      input.style.height = "55px";
+      input.focus();
+      console.log(
+        "After clear (timeout):",
+        JSON.stringify(input.value),
+        "Length:",
+        input.value.length
+      );
+    }, 10);
+    input.focus();
+    console.log(
+      "After clear:",
+      JSON.stringify(input.value),
+      "Length:",
+      input.value.length
+    );
     showLoader();
 
     const processedMessage = getChatbotResponse(messageText);
@@ -278,7 +303,31 @@ function sendInputMessage() {
   if (messageText) {
     addMessage(messageText, true); // Add user message with timestamp
     input.value = "";
-
+    input.scrollTop = 0;
+    input.setSelectionRange(0, 0);
+    input.rows = 1;
+    input.style.height = "55px";
+    setTimeout(() => {
+      input.value = "";
+      input.scrollTop = 0;
+      input.setSelectionRange(0, 0);
+      input.rows = 1;
+      input.style.height = "55px";
+      input.focus();
+      console.log(
+        "After clear (timeout):",
+        JSON.stringify(input.value),
+        "Length:",
+        input.value.length
+      );
+    }, 10);
+    input.focus();
+    console.log(
+      "After clear:",
+      JSON.stringify(input.value),
+      "Length:",
+      input.value.length
+    );
     showLoader();
 
     fetch("/ask", {
@@ -335,7 +384,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   sendButton.addEventListener("click", function () {
-    if (messageInput.value) {
+    const message = messageInput.value.trim();
+    if (message) {
       sendInputMessage();
     }
   });
@@ -825,6 +875,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (message) {
       addMessage(message, true);
       messageInput.value = "";
+      messageInput.scrollTop = 0;
+      messageInput.setSelectionRange(0, 0);
+      messageInput.rows = 1;
+      messageInput.style.height = "55px";
+      messageInput.focus();
+      console.log(
+        "After clear:",
+        JSON.stringify(messageInput.value),
+        "Length:",
+        messageInput.value.length
+      );
       // Your existing chat handling logic here
     }
   });
@@ -920,11 +981,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (message) {
       addMessage(message, true);
       messageInput.value = "";
-
+      messageInput.scrollTop = 0;
+      messageInput.setSelectionRange(0, 0);
+      messageInput.rows = 1;
+      messageInput.style.height = "55px";
+      messageInput.focus();
+      console.log(
+        "After clear:",
+        JSON.stringify(messageInput.value),
+        "Length:",
+        messageInput.value.length
+      );
       // Your existing chat handling logic here
-      setTimeout(() => {
-        addMessage(`Response to: ${message}`, false);
-      }, 1000);
     }
   });
 
@@ -953,6 +1021,17 @@ document.getElementById("send-button").addEventListener("click", () => {
   if (message) {
     addMessage(message, true);
     messageInput.value = "";
+    messageInput.scrollTop = 0;
+    messageInput.setSelectionRange(0, 0);
+    messageInput.rows = 1;
+    messageInput.style.height = "55px";
+    messageInput.focus();
+    console.log(
+      "After clear:",
+      JSON.stringify(messageInput.value),
+      "Length:",
+      messageInput.value.length
+    );
 
     // Simulate bot response (replace with your actual bot response logic)
     setTimeout(() => {
