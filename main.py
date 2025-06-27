@@ -16,7 +16,6 @@ import json
 import re
 import logging
 import datetime
-from collections import defaultdict
 
 # -*- coding: utf-8 -*-
 
@@ -44,7 +43,7 @@ logging.basicConfig(
 )
 
 # Initialize tokenizer
-GPT_MODEL = "gpt-4.1-nano"
+GPT_MODEL = "gpt-4.1"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 #encoding = tiktoken.encoding_for_model(GPT_MODEL)
 encoding = tiktoken.get_encoding("cl100k_base")
@@ -57,45 +56,16 @@ token_usage = {
     "embedding_tokens": 0
 }
 
-# Chat history configuration
-MAX_CHAT_HISTORY = 20  # Increased to 20 messages (10 pairs of Q&A)
-chat_history = defaultdict(list)  # {ip_address: [summary1, summary2, ...]}
-
 def count_tokens(text: str) -> int:
     """Count the number of tokens in a text string."""
     return len(encoding.encode(text))
 
-def manage_chat_history(client_ip: str, message: dict):
-    """Manage chat history with a maximum capacity and context maintenance."""
-    if client_ip not in chat_history:
-        chat_history[client_ip] = []
-    
-    # Add new message
-    chat_history[client_ip].append(message)
-    
-    # If history exceeds max capacity, remove oldest messages
-    if len(chat_history[client_ip]) > MAX_CHAT_HISTORY:
-        # Keep the last MAX_CHAT_HISTORY messages
-        chat_history[client_ip] = chat_history[client_ip][-MAX_CHAT_HISTORY:]
-    
-    # Add context about the current model being discussed
-    if message["role"] == "assistant":
-        # Extract model information from the response
-        model_pattern = r'(?:TX|KR|QC)[-\s]?\d+(?:-\d+)?'
-        model_match = re.search(model_pattern, message["content"], re.IGNORECASE)
-        if model_match:
-            current_model = model_match.group(0)
-            # Add model context to the next user message
-            if len(chat_history[client_ip]) > 1:
-                last_user_msg = chat_history[client_ip][-2]
-                if last_user_msg["role"] == "user":
-                    # Add model context to the user's message
-                    context_msg = f"Current model being discussed: {current_model}. "
-                    if not last_user_msg["content"].startswith(context_msg):
-                        last_user_msg["content"] = context_msg + last_user_msg["content"]
+from collections import defaultdict
+
+chat_history = defaultdict(list)  # {ip_address: [summary1, summary2, ...]}
 
 # === CONFIG ===
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = ""
 VECTOR_META_PATH = "metadata.pkl"
 VECTOR_EMBEDDINGS_PATH = "vector_embeddings.pkl"
 EMBEDDING_MODEL = "text-embedding-ada-002"  # OpenAI model for embeddings
@@ -118,6 +88,7 @@ app.add_middleware(
 # === MODELS ===
 class ChatRequest(BaseModel):
     prompt: str
+    session_id: Optional[str] = "default"
     max_results: Optional[int] = 3
     include_sources: Optional[bool] = True
 
@@ -143,9 +114,23 @@ def get_embedding(text: str, engine: str = EMBEDDING_MODEL) -> list:
     except Exception as e:
         logger.error(f"Error getting embedding: {str(e)}")
         raise e
+        
+def load_model_chunks(data: dict) -> dict:
+    model_chunks = {}
+    for model_name, model_info in data.items():
+        flat = [f"Model: {model_name}"]
+        # details, description, values are all dicts
+        for section in ("details", "description", "values"):
+            sec = model_info.get(section, {})
+            if isinstance(sec, dict):
+                flat.append(f"\n[{section.upper()}]")
+                for k, v in sec.items():
+                    flat.append(f"{k}: {v}")
+        model_chunks[model_name] = "\n".join(flat)
+    return model_chunks
 
 # === UTILITIES ===
-def chunk_text(text, max_tokens=500, overlap=100):
+def chunk_text(text, max_tokens=100, overlap=50):
     words = text.split()
     chunks = []
     start = 0
@@ -178,34 +163,47 @@ def build_vector_index():
     # First, load the JSON files directly
     json_files = {
         "comparisons.json": model_comparisons,
-        "dealers.json": dealers_data,
+        #"dealers.json": dealers_data,
         "general_answers.json": general_answers
     }
-
     # Process JSON files
+        # Process JSON files
+       # Process JSON files
+   # Process JSON files
     for filename, data in json_files.items():
-        # Convert JSON data to string format
-        content = json.dumps(data, indent=2)
-        if not content:
-            logger.error(f"Empty content for {filename}")
+        try:
+            logger.info(f"[INDEX BUILD] processing {filename}, type(data)={type(data)}")
+            if filename == "comparisons.json":
+                # if somehow data is a raw JSON string, parse it
+                if isinstance(data, str):
+                    try:
+                        data = json.loads(data)
+                        logger.info("[INDEX BUILD] parsed comparisons.json string into dict")
+                    except Exception as e:
+                        logger.error(f"[INDEX BUILD] cannot parse comparisons.json: {e}")
+                        continue
+
+                if not isinstance(data, dict):
+                    logger.error(f"[INDEX BUILD] unexpected comparisons.json type: {type(data)}; skipping")
+                    continue
+
+                # now flatten each model
+                chunks_dict = load_model_chunks(data)
+                logger.info(f"[INDEX BUILD] Loaded {len(chunks_dict)} model-chunks from {filename}")
+                for model_name, chunk in chunks_dict.items():
+                    embedding, tokens = get_embedding(chunk)
+                    logger.info(f"[INDEX BUILD] {filename}?{model_name}: {tokens} tokens")
+                    chunk_embeddings.append({
+                        "embedding": embedding,
+                        "chunk": chunk,
+                        "source": filename,
+                        "model": model_name
+                  })
+        except Exception as e:
+            logger.error(f"Error processing {filename}: {e}")
             continue
 
-        # Split into chunks
-        chunks = chunk_text(content, max_tokens=500, overlap=100)
-        logger.info(f"Processing {filename} - Generated {len(chunks)} chunks")
-        
-        for chunk in chunks:
-            try:
-                embedding, tokens = get_embedding(chunk, engine=EMBEDDING_MODEL)
-                logger.info(f"Chunk Embedding - Source: {filename}, Tokens: {tokens}")
-                chunk_embeddings.append({
-                    "embedding": embedding,
-                    "chunk": chunk,
-                    "source": filename
-                })
-            except Exception as e:
-                logger.error(f"Error processing chunk from {filename}: {str(e)}")
-                continue
+
 
     # Process text files
     for filename in os.listdir("product_files"):
@@ -234,11 +232,11 @@ def build_vector_index():
     # Save embeddings
     with open("chunk_embeddings.pkl", "wb") as f:
         pickle.dump(chunk_embeddings, f)
-    
+
     logger.info(f"Vector index built successfully with {len(chunk_embeddings)} total chunks")
 
 
-def get_relevant_chunks(query, k=3, max_tokens=MAX_TOKENS):
+def get_relevant_chunks(query, k=10, max_tokens=MAX_TOKENS):
     # sourcery skip: inline-immediately-returned-variable
     query_embedding, embedding_tokens = get_embedding(query, engine=EMBEDDING_MODEL)
     token_usage["embedding_tokens"] += embedding_tokens
@@ -263,35 +261,40 @@ def get_relevant_chunks(query, k=3, max_tokens=MAX_TOKENS):
         else:
             break
 
-    results = [
-        SearchResult(content=chunk["chunk"], source=chunk["source"])
-        for chunk in selected_chunks
-    ]
-
+    results = []
+    for chunk in selected_chunks:
+        sr = SearchResult(content=chunk["chunk"], source=chunk["source"])
+        # assign the model name (or None)
+        sr.model = chunk.get("model")
+        results.append(sr)
     return results
 
-def summarize_message(message: str) -> str:
+
+def summarize_message(text: str) -> str:
     try:
-        prompt = f"Summarize this message in one short sentence:\n\n{message}"
         response = openai.ChatCompletion.create(
-            model=GPT_MODEL,
+            model="gpt-3.5-turbo",  # summarization model
             messages=[
-                {"role": "system", "content": "You are a helpful summarizer."},
-                {"role": "user", "content": prompt}
+                {"role": "system", "content": "Summarize the following message in one sentence."},
+                {"role": "user", "content": text}
             ],
             temperature=0.3,
-            max_tokens=30
+            max_tokens=40
         )
         return response["choices"][0]["message"]["content"].strip()
     except Exception as e:
-        logger.error(f"Error in summarize_message: {str(e)}")
-        # Fallback to simple truncation if summarization fails
-        return message[:100] + "..." if len(message) > 100 else message
-
+        logger.warning(f"Summarization fallback: {str(e)}")
+        return text[:60].strip().replace("\n", " ") + "..." if len(text) > 60 else text
+        
 # === ROUTES ===
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+from collections import defaultdict
+
+# In-memory chat history
+chat_history = defaultdict(list)
 
 def summarize_message(text):
     try:
@@ -355,6 +358,32 @@ def handle_specific_model_comparison(query: str) -> bool:
     
     # Need at least 2 models for comparison
     return len(specific_models) >= 2
+    
+def extract_specific_models(query: str) -> list:
+    """
+    Pulls out any model names in the form """
+    query_lower = query.lower()
+    models = []
+
+    # First, catch two-model comparisons like "KR30 vs KR44"
+    combined_pattern = (
+        r'(?:compare\s+)?'          # optional "compare"
+        r'([a-zA-Z]{2,3})[-\s]?(\d+)'  # prefix+number
+        r'(?:\s+(?:and|vs|or|against)\s+)' 
+        r'([a-zA-Z]{2,3})[-\s]?(\d+)'  # second prefix+number
+    )
+    m = re.search(combined_pattern, query_lower)
+    if m:
+        p1,n1,p2,n2 = m.groups()
+        return [f"{p1.upper()}{n1}", f"{p2.upper()}{n2}"]
+
+    # Otherwise pick up any standalone mentions
+    for prefix in ("tx","kr","qc"):
+        for match in re.finditer(fr'{prefix}[-\s]?(\d+)', query_lower):
+            num = match.group(1)
+            models.append(f"{prefix.upper()}{num}")
+
+    return models
 
 def get_model_comparison_data(query: str) -> dict:
     """Extract relevant model comparison data based on the query."""
@@ -533,10 +562,11 @@ async def ask_bot(request: Request):
         body = await request.json()
         chat_request = ChatRequest(**body)
         question = chat_request.prompt.strip()
-        client_ip = request.client.host  
-        
-        # Push the new user message onto their history using the manager
-        manage_chat_history(client_ip, {"role": "user", "content": question})
+        session_id = chat_request.session_id or "default"
+
+        # Push the new user message onto their history
+        chat_history[session_id].append({"role": "user", "content": question})
+
         # Handle empty questions
         if not question:
             return {
@@ -565,7 +595,7 @@ async def ask_bot(request: Request):
         # Check for dealer query or postal code
         is_dealer = is_dealer_query(question)
         postal_code = extract_postal_code(question)
-        
+
         if is_dealer or postal_code:
             if not postal_code:
                 return {
@@ -577,7 +607,7 @@ async def ask_bot(request: Request):
                         "Questions": []
                     })
                 }
-            
+
             nearest_dealers = find_nearest_dealers(postal_code)
             if not nearest_dealers:
                 return {
@@ -589,7 +619,7 @@ async def ask_bot(request: Request):
                         "Questions": []
                     })
                 }
-            
+
             dealer_info = format_dealer_response(nearest_dealers, postal_code)
             return {"response": json.dumps(dealer_info)}
 
@@ -619,11 +649,11 @@ async def ask_bot(request: Request):
             }
 
         # Build context and get response from OpenAI
-        context = build_context(relevant_chunks, model_data)
-        bot_reply = get_openai_response(question, context, client_ip)  # Pass client_ip here
+        context = build_context(relevant_chunks)
+        bot_reply = get_openai_response(session_id,question, context)
 
         # Append the assistant's reply so next turn sees it
-        manage_chat_history(client_ip, {"role": "assistant", "content": bot_reply})
+        chat_history[session_id].append({"role": "assistant", "content": bot_reply})
 
         formatted_response = format_chatbot_response(bot_reply)
         return {"response": json.dumps(formatted_response)}
@@ -632,7 +662,7 @@ async def ask_bot(request: Request):
         logger.error(f"Error processing request: {str(e)}")
         return {
             "response": json.dumps({
-                "Description": "I'm here to help! I can provide information about our generator models, compare different models, or help you find a dealer. What would you like to know?",
+                "Description": "We ran into an error, please retry! I can provide information about our generator models, compare different models, or help you find a dealer. What would you like to know?",
                 "Links": [
                     '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
                     '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
@@ -650,15 +680,15 @@ def format_dealer_response(dealers, postal_code):
                                  f"  <h6>{dealer['company']}</h6>\n" +
                                  f"  <div class='dealer-details'>\n" +
                                  f"    <div class='detail-row'>\n" +
-                                 f"      <span class='label'><strong>Address:</strong></span>\n" +
+                                 f"      <span class='label'>Address:</span>\n" +
                                  f"      <span class='value'>{dealer['address']}</span>\n" +
                                  f"    </div>\n" +
                                  f"    <div class='detail-row'>\n" +
-                                 f"      <span class='label'><strong>Phone:</strong></span>\n" +
+                                 f"      <span class='label'>Phone:</span>\n" +
                                  f"      <span class='value'>{dealer['phone']}</span>\n" +
                                  f"    </div>\n" +
                                  f"    <div class='detail-row'>\n" +
-                                 f"      <span class='label'><strong>Email:</strong></span>\n" +
+                                 f"      <span class='label'>Email:</span>\n" +
                                  f"      <span class='value'>{dealer['email']}</span>\n" +
                                  f"    </div>\n" +
                                  f"  </div>\n" +
@@ -676,20 +706,17 @@ def format_dealer_response(dealers, postal_code):
             '<a href="https://baumalight.com/product/locator" target="_blank">Dealer Locator</a>'
         ],
         "Questions": []
-    }
-                
-def build_context(chunks, model_data):
-    context = []
-    
-    # Add chunk information
+    }        
+def build_context(chunks):
+    """
+    Builds a readable context string from retrieved vector chunks.
+    Includes model name if present in the chunk metadata.
+    """
+    context_lines = []
     for chunk in chunks:
-        context.append(f"Content from {chunk.source}:\n{chunk.content}")
-    
-    # Add model data if available
-    if model_data["models"]:
-        context.append("Model Information:\n" + json.dumps(model_data["models"], indent=2))
-
-    return "\n\n".join(context)
+        label = f" ({chunk.model})" if hasattr(chunk, "model") and chunk.model else ""
+        context_lines.append(f"From {chunk.source}{label}:\n{chunk.content}")
+    return "\n\n".join(context_lines)
 
 def clean_response_text(text: str) -> str:
     """Clean up response text by removing source file references and question-answer format."""
@@ -703,144 +730,71 @@ def clean_response_text(text: str) -> str:
     text = text.strip()
     return text
 
-def store_conversation_data(client_ip, question, answer, tokens_used):
-    """Store conversation data in both TXT and JSON formats."""
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    # Create conversation entry
-    conversation_entry = {
-        "timestamp": timestamp,
-        "ip": client_ip,
-        "question": question,
-        "answer": answer,
-        "tokens_used": tokens_used,
-        "total_tokens": token_usage["total_tokens"]
-    }
-    
-    # Store in JSON
-    json_file = "conversation_history.json"
-    try:
-        if os.path.exists(json_file):
-            with open(json_file, "r") as f:
-                history = json.load(f)
-        else:
-            history = []
-        
-        history.append(conversation_entry)
-        
-        with open(json_file, "w") as f:
-            json.dump(history, f, indent=4)
-    except Exception as e:
-        logger.error(f"Error storing JSON conversation data: {str(e)}")
-    
-    # Store in TXT
-    txt_file = "conversation_history.txt"
-    try:
-        with open(txt_file, "a", encoding="utf-8") as f:
-            f.write(f"\n{'='*50}\n")
-            f.write(f"Timestamp: {timestamp}\n")
-            f.write(f"IP Address: {client_ip}\n")
-            f.write(f"Question: {question}\n")
-            f.write(f"Answer: {answer}\n")
-            f.write(f"Tokens Used: {tokens_used}\n")
-            f.write(f"Total Tokens: {token_usage['total_tokens']}\n")
-            f.write(f"{'='*50}\n")
-    except Exception as e:
-        logger.error(f"Error storing TXT conversation data: {str(e)}")
+def get_openai_response(session_id, question, context):
+    # 1) Count questions: how many KR/TX/QC models?
+    if re.search(r'how many.*models.*listed', question, re.IGNORECASE):
+        q = question.upper()
+        if "KR" in q:
+            kr = sorted([m for m in model_comparisons if m.startswith("KR")])
+            return f"<p>There are {len(kr)} KR models listed: {', '.join(kr)}.</p>"
+        if "TX" in q:
+            tx = sorted([m for m in model_comparisons if m.startswith("TX")])
+            return f"<p>There are {len(tx)} TX models listed: {', '.join(tx)}.</p>"
+        if "QC" in q:
+            qc = sorted([m for m in model_comparisons if m.startswith("QC")])
+            return f"<p>There are {len(qc)} QC models listed: {', '.join(qc)}.</p>"
 
-def get_openai_response(question, context, client_ip):
-    history = chat_history[client_ip]
-    
-    # Extract current model from history if available
-    current_model = None
-    for msg in reversed(history):
-        if msg["role"] == "assistant":
-            model_pattern = r'(?:TX|KR|QC)[-\s]?\d+(?:-\d+)?'
-            model_match = re.search(model_pattern, msg["content"], re.IGNORECASE)
-            if model_match:
-                current_model = model_match.group(0)
-                break
-    
-    # Add model context to the question if we have a current model
-    if current_model and not any(model in question.upper() for model in ["TX", "KR", "QC"]):
-        question = f"Regarding the {current_model} model: {question}"
 
-    # Check for price-related queries
-    price_keywords = ["price"]
-    if any(keyword in question.lower() for keyword in price_keywords):
-        # Find the model in model_comparisons
-        model_found = False
-        for series in model_comparisons:
-            for model_key, model_data in model_comparisons[series].items():
-                if model_key.replace(" ", "") == current_model or model_key == current_model:
-                    model_found = True
-                    values = model_data.get("values", {})
-                    response = f"""<p>The exact pricing for the {current_model} model is:</p>
-                    <ul>
-                        <li><strong>USD Price:</strong> ${values.get('USDPrice', 'N/A')}</li>
-                        <li><strong>USD Discount:</strong> ${values.get('discountUSDPrice', 'N/A')}</li>
-                        <li><strong>CAD Price:</strong> ${values.get('CADPrice', 'N/A')}</li>
-                        <li><strong>CAD Discount:</strong> ${values.get('discountCADPrice', 'N/A')}</li>
-                    </ul>"""
-                    store_conversation_data(client_ip, question, response, 0)
-                    return response
-        
-        if not model_found:
-            response = f"<p>I apologize, but I couldn't find the exact pricing information for the {current_model} model in our database.</p>"
-            store_conversation_data(client_ip, question, response, 0)
-            return response
+    # 3) Otherwise fall back to your LLM + vector-context logic
+    full_history   = chat_history[session_id]
+    recent_history = full_history[-6:]
+    system_prompt  = {
+        "role": "system",
+        "content": """You are a knowledgeable Baumalight product assistant. You will be facing customers, respond accordingly. Always answer with confidence, do not use words such as likely. Recommend one generator model based only on values from the comparisons.json file.DO NOT HALLUCINATE.
 
-    # Check if the question contains a model number
-    model_pattern = r'(?:TX|KR|QC)\s*\d+'
-    has_model = bool(re.search(model_pattern, question, re.IGNORECASE))
-    
-    # Check if this is a model count question
-    is_count_question = bool(re.search(r'how many.*models.*listed', question.lower()))
-    
-    # If it's a count question, get the exact count from model_comparisons
-    if is_count_question:
-        if "KR" in question.upper():
-            kr_models = list(model_comparisons["KR Models"].keys())
-            count = len(kr_models)
-            models_list = ", ".join(kr_models)
-            response = f"<p>There are {count} KR models listed: {models_list}.</p>"
-            store_conversation_data(client_ip, question, response, 0)  # Store conversation
-            return response
-        elif "TX" in question.upper():
-            tx_models = list(model_comparisons["TX Models"].keys())
-            count = len(tx_models)
-            models_list = ", ".join(tx_models)
-            response = f"<p>There are {count} TX models listed: {models_list}.</p>"
-            store_conversation_data(client_ip, question, response, 0)  # Store conversation
-            return response
-        elif "QC" in question.upper():
-            qc_models = list(model_comparisons["QC Models"].keys())
-            count = len(qc_models)
-            models_list = ", ".join(qc_models)
-            response = f"<p>There are {count} QC models listed: {models_list}.</p>"
-            store_conversation_data(client_ip, question, response, 0)  # Store conversation
-            return response
-    
-    messages = [
-        {
-            "role": "system",
-            "content": """You are a knowledgeable Baumalight product assistant. You will be facing customers, respond accordingly. Recommend a single generator model based only on values from the comparisons.json file.DO NOT HALLUCINATE.
+Rules: ONLY MODELS THAT EXIST ARE - 
 
-Rules: ONLY MODELS THAT EXIST ARE - TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65,QC12,QC19,QC30,QC45,QC55,QC65,QC80,QC100,QC30-2,QC45-2,QC68-2,QC105-2,QC30-2,QC45-3,QC68-3,QC105-3,QC30-4,QC45-4,QC68-4,QC105-4,QC27-6,QC50-6,QC75-6,QC100-6.
+Single Phase (Recommend these first unless the user asks for a three phase generator):
+TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65,QC12,QC19,QC30,QC45,QC55,QC65,QC80,QC100
+
+
+The three phase:
+QC30-2,QC45-2,QC68-2,QC105-2,QC30-2,QC45-3,QC68-3,QC105-3,QC30-4,QC45-4,QC68-4,QC105-4,QC27-6,QC50-6,QC75-6,QC100-6.
+
+When asked for a recommendation, do not beat around the bush.
+
+Minimum 11hp tractor is needed to run Baumalight Generators (TX7).
+Recommend from all TX KR and QC series based on requirement.
 
 DO NOT MENTION ANY OTHER MODEL APART FROM THESE MODELS.
 
-When the user describes their needs (e.g., "I need a generator for irrigation" or "What should I buy for backup?"):
-Do power calculation for their needs and recommend one model.
-1. RECOMMEND a specific model name and the matching series only. (QC12,QC19,QC30,QC45,QC55,QC65,QC80,QC100,TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65)
-2. DO NOT include any specifications (KW, HP, Voltage, RPM, Amps, etc.).
-3. DO NOT include any values or numbers.
-4. Just explain why that model is suitable for the stated use case.
-5. When asked to recommend model:
- 1.calculate the power requirement based on needs 
- 2.recommend a model which is closest to the KW rating.
-6. When listing price always list USD, CAD, USD discount and CAD discount.
-MAKE SURE TO ONLY RECOMMEND OUT OF THESE-QC12,QC19,QC30,QC45,QC55,QC65,QC80,QC100,TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65.
+TX series cannot power motors above 2kw.
+
+Always recommend cheaper options and mention it.
+
+If user's tractor Horsepower is above the model's "tractor Horsepower required to run at 100% load", recommend that model
+
+ALWAYS RECOMMEND A MODEL THAT HAS HIGHER KW THAN THE USER REQUIREMENT BECAUSE IT IS NOT RECOMMENDED TO RUN THE GENERATOR AT 100% LOAD AT ALL TIMES.
+
+Suggest TX generator for small loads and brief usage because they are cheap and 2 pole.
+
+Always suggest QC and KR generators for 24/7 output because they are 4 pole.
+
+Suggest QC generators for premium features and three phase outputs.
+
+Model names have the power rating in the name itself. Eg QC12 = 12kW, TX31 = 31kW, QC100 = 100kW.
+
+When the user describes their needs (e.g., "recommend a model for 12KW requirement." or "What should I buy for backup?"):
+Do power calculation for their needs and recommend a few similar models.
+1. Recommend a KW value slightly above the user requirement and ask them to confirm.
+2. After confirmation recommend one model of generator that meet the requirements. 
+3. DO NOT include any specifications (KW, HP, Voltage, RPM, Amps, etc.).
+4. DO NOT include any values or numbers.
+5. Just explain why that model is suitable for the stated use case.
+6. When asked to recommend model Calculate the power requirement and suggest one model at a time.
+7. When listing price always list USD, CAD, USD discount and CAD discount.
+8. If the user asks more than 5 questions, add "You could contact your nearest dealer for further assistance. Just type the word "Dealer"
+9. If the user asks more than 5 questions, add "This bot used generative AI, we are constantly working on making it better. Feel free to give feedback for this conversation with a thumbs-up or thumbs-down "
 
 Other rules :
  
@@ -852,14 +806,13 @@ Other rules :
 6.values = pricing
 7.Recommend the lowest model that is in the context and meets the requested KW. 
 8.Never suggest models with lower KW than requested.
-9. Whenever asked for a suggestion, always suggest one model.
+9. Whenever asked for a suggestion, always suggest one model at a time.
 10.DO NOT MAKE UP ANY INFORMATION. Check comparisons.json
+11. When asked for recommendation, always recommend a model with around 25% higher power rating than the users requirement for safe use.
+12. Suggest different models only when asked.
 DO not include model, specifications and pricing when not needed.
 Include model name and specifications when necessary:
 DO not include your own links.
-
-1. Model name (e.g., TX7)
-2. Series name in '[Prefix] Series' format
 
 Formatting:
 
@@ -868,23 +821,14 @@ Formatting:
 3. No instruction text or file references
 
 """
-        },
-        {
-            "role": "user",
-            "content": f"Context:\n{context}\n\nQuestion: {question}"
-        }
-    ]
-    
-    messages.extend(history)
-    
-    messages.append({
+    }
+    user_message = {
         "role": "user",
-        "content": f"Context:\n{context}\n\nQuestion: {history[-1]['content']}"
-    })
+        "content": f"Context:\n{context}\n\nQuestion: {question}"
+    }
 
-    # Log the input to OpenAI API
-    logger.info("OpenAI API Input:")
-    logger.info(json.dumps(messages, indent=2))
+    messages = [system_prompt] + recent_history + [user_message]
+    logger.info("OpenAI API Input:\n" + json.dumps(messages, indent=2))
 
     response = openai.ChatCompletion.create(
         model=GPT_MODEL,
@@ -892,41 +836,21 @@ Formatting:
         temperature=0.3,
         max_tokens=1000
     )
-    
-    # Log the response from OpenAI API
-    logger.info("OpenAI API Response:")
-    logger.info(json.dumps(response, indent=2))
-    
-    # Get the content and clean it
-    content = response["choices"][0]["message"]["content"].strip()
-    
-    # Store conversation data
-    tokens_used = response["usage"]["total_tokens"]
-    store_conversation_data(client_ip, question, content, tokens_used)
-    
-    # Remove any JSON-like content
-    content = re.sub(r'\{.*?\}', '', content, flags=re.DOTALL)
-    
-    # Remove any remaining pre or code tags
-    content = clean_pre_tags(content)
-    
-    # Remove any placeholder content
-    content = re.sub(r'\.{3,}', '', content)
-    
-    # Remove any context references
-    content = re.sub(r'Content from.*?:\n', '', content, flags=re.DOTALL)
-    
-    # Remove any question references
-    content = re.sub(r'Question:.*?$', '', content, flags=re.DOTALL)
-    
-    # Remove any "Not specified" specifications
-    content = re.sub(r'<li><strong>.*?:</strong> Not specified</li>', '', content)
-    content = re.sub(r'<li><strong>.*?:</strong> </li>', '', content)
-    
-    # Clean up any extra whitespace
-    content = re.sub(r'\s+', ' ', content).strip()
-    
-    return content
+
+    logger.info("OpenAI API Response:\n" + json.dumps(response, indent=2))
+    reply = response.choices[0].message.content.strip()
+
+    # your existing cleanup
+    reply = re.sub(r'\{.*?\}', '', reply, flags=re.DOTALL)
+    reply = clean_pre_tags(reply)
+    reply = re.sub(r'\.{3,}', '', reply)
+    reply = re.sub(r'Content from.*?:\n', '', reply, flags=re.DOTALL)
+    reply = re.sub(r'Question:.*?$', '', reply, flags=re.DOTALL)
+    reply = re.sub(r'<li><strong>.*?:</strong> Not specified</li>', '', reply)
+    reply = re.sub(r'<li><strong>.*?:</strong> </li>', '', reply)
+    reply = re.sub(r'\s+', ' ', reply).strip()
+
+    return reply
 
 def format_product_specs(specs_text):
     """Format product specifications into a clean HTML structure."""
@@ -1291,4 +1215,4 @@ def generate_model_comparison(models_to_compare):
 if __name__ == "__main__":
 
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
