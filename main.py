@@ -725,7 +725,7 @@ async def ask_bot(request: Request):
 
         # Append the assistant's reply so next turn sees it
         chat_history[session_id].append({"role": "assistant", "content": bot_reply})
-
+        formatted_response = format_chatbot_response(bot_reply, question)
         return {"response": json.dumps(formatted_response)}
 
     except Exception as e:
