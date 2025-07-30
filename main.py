@@ -15,13 +15,42 @@ import tiktoken
 import json
 import re
 import logging
-import datetime
-
+from typing import Dict
 # -*- coding: utf-8 -*-
 
 # Load environment variables
 load_dotenv()
+#Global Series links 
 
+LINKS = {
+
+    "TX": '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
+
+    "KR": '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
+
+    "QC": '<a href="https://baumalight.com/product/generators/qc-singlephase" target="_blank">QC Models</a>',
+
+}
+
+SERIES_LINKS = LINKS
+
+
+
+def extract_series_from_query(query: str) -> list:
+
+    """
+
+    Look for any TX/KR/QC models in the user's query and return
+
+    the corresponding series prefixes in a list, e.g. ["TX","QC"].
+
+    """
+
+    models = extract_specific_models(query)
+
+    prefixes = {m[:2] for m in models}
+
+    return [p for p in prefixes if p in SERIES_LINKS]
 # Load model comparisons data
 with open("product_files/comparisons.json", "r") as f:
     model_comparisons = json.load(f)
@@ -55,6 +84,8 @@ token_usage = {
     "total_tokens": 0,
     "embedding_tokens": 0
 }
+
+session_locations: Dict[str, int] = {}
 
 def count_tokens(text: str) -> int:
     """Count the number of tokens in a text string."""
@@ -236,7 +267,7 @@ def build_vector_index():
     logger.info(f"Vector index built successfully with {len(chunk_embeddings)} total chunks")
 
 
-def get_relevant_chunks(query, k=10, max_tokens=MAX_TOKENS):
+def get_relevant_chunks(query, k=10, max_tokens=500):
     # sourcery skip: inline-immediately-returned-variable
     query_embedding, embedding_tokens = get_embedding(query, engine=EMBEDDING_MODEL)
     token_usage["embedding_tokens"] += embedding_tokens
@@ -269,7 +300,42 @@ def get_relevant_chunks(query, k=10, max_tokens=MAX_TOKENS):
         results.append(sr)
     return results
 
+def get_or_ask_location(session_id: str, message: str = None) -> Optional[JSONResponse]:
+   
+    if session_id in session_locations:
+        return None
+        
+    # 1) On every page load (empty prompt), re-ask for location
+    if not message or not message.strip():
+        return JSONResponse({
+            "response": json.dumps({
+                "Description": "Before we proceed, please select your location:",
+                "Links": [],
+                "Questions": ["Canada", "USA", "Overseas"]
+            })
+        })
 
+    # 2) If they clicked one of the buttons, store and confirm
+    choices = {"Canada": 1, "USA": 2, "Overseas": 3}
+    if message in choices:
+        session_locations[session_id] = choices[message]
+        return JSONResponse({
+            "response": json.dumps({
+                "Description": f"Location set to {message}. How can I help you today?",
+                "Links": [],
+                "Questions": []
+            })
+        })
+
+    # 3) Any other reply re-ask
+    return JSONResponse({
+        "response": json.dumps({
+            "Description": "Before we proceed, please select your location:",
+            "Links": [],
+            "Questions": ["Canada", "USA", "Overseas"]
+        })
+    })
+    
 def summarize_message(text: str) -> str:
     try:
         response = openai.ChatCompletion.create(
@@ -563,6 +629,13 @@ async def ask_bot(request: Request):
         chat_request = ChatRequest(**body)
         question = chat_request.prompt.strip()
         session_id = chat_request.session_id or "default"
+        
+        # Location check
+        loc_response = get_or_ask_location(session_id, question)
+        if loc_response:
+          return loc_response
+
+
 
         # Push the new user message onto their history
         chat_history[session_id].append({"role": "user", "content": question})
@@ -636,26 +709,23 @@ async def ask_bot(request: Request):
         relevant_chunks = get_relevant_chunks(question, k=3)
 
         if not relevant_chunks and not model_data["models"]:
-            return {
-                "response": json.dumps({
-                    "Description": "I can help you with information about our generator models, product comparisons, or finding a dealer. What would you like to know specifically?",
-                    "Links": [
-                        '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
-                        '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
-                        '<a href="https://baumalight.com/product/generators/qc-singlephase" target="_blank">QC Models</a>'
-                    ],
-                    "Questions": []
+                     series = extract_series_from_query(question)
+                     links  = [SERIES_LINKS[p] for p in series] or list(SERIES_LINKS.values())
+                     return {
+                        "response": json.dumps({
+                          "Description": "I can help you with information...",
+                          "Links": links,
+                          "Questions": []
                 })
-            }
+        }
 
         # Build context and get response from OpenAI
         context = build_context(relevant_chunks)
-        bot_reply = get_openai_response(session_id,question, context)
+        bot_reply = get_openai_response(session_id, question, context)
 
         # Append the assistant's reply so next turn sees it
         chat_history[session_id].append({"role": "assistant", "content": bot_reply})
 
-        formatted_response = format_chatbot_response(bot_reply)
         return {"response": json.dumps(formatted_response)}
 
     except Exception as e:
@@ -729,8 +799,15 @@ def clean_response_text(text: str) -> str:
     # Remove any leading/trailing whitespace and newlines
     text = text.strip()
     return text
+    
+
+
 
 def get_openai_response(session_id, question, context):
+   
+    loc_code   = session_locations.get(session_id, 0)
+    loc_name   = {1:"Canada", 2:"USA", 3:"Overseas"}.get(loc_code, "Unknown")
+    
     # 1) Count questions: how many KR/TX/QC models?
     if re.search(r'how many.*models.*listed', question, re.IGNORECASE):
         q = question.upper()
@@ -744,16 +821,21 @@ def get_openai_response(session_id, question, context):
             qc = sorted([m for m in model_comparisons if m.startswith("QC")])
             return f"<p>There are {len(qc)} QC models listed: {', '.join(qc)}.</p>"
 
+    
 
     # 3) Otherwise fall back to your LLM + vector-context logic
     full_history   = chat_history[session_id]
     recent_history = full_history[-6:]
     system_prompt  = {
         "role": "system",
-        "content": """You are a knowledgeable Baumalight product assistant. You will be facing customers, respond accordingly. Always answer with confidence, do not use words such as likely. Recommend one generator model based only on values from the comparisons.json file.DO NOT HALLUCINATE.
+       "content": f"User location: {loc_name}\n\n" \
+         """You are a knowledgeable Baumalight product assistant. You will be facing customers, respond accordingly. Always answer with confidence, do not use words such as likely. Recommend one generator model based only on values from the comparisons.json file. DO NOT HALLUCINATE.
+
+Baumalight started making QC generators in early 2001, TX generators in 2004 and KR generators in 2019.
 
 Rules: ONLY MODELS THAT EXIST ARE - 
 
+Never recommend a model unless the user asks for it.
 Single Phase (Recommend these first unless the user asks for a three phase generator):
 TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65,QC12,QC19,QC30,QC45,QC55,QC65,QC80,QC100
 
@@ -761,18 +843,42 @@ TX7,TX12,TX18,TX25,TX31,KR30,KR44,KR52,KR65,QC12,QC19,QC30,QC45,QC55,QC65,QC80,Q
 The three phase:
 QC30-2,QC45-2,QC68-2,QC105-2,QC30-2,QC45-3,QC68-3,QC105-3,QC30-4,QC45-4,QC68-4,QC105-4,QC27-6,QC50-6,QC75-6,QC100-6.
 
-When asked for a recommendation, do not beat around the bush.
+If the user asks more than 5 questions, add "You could contact your nearest dealer for further assistance. Just type the word 'Dealer'".
+
+If the user asks more than 5 questions, add "This bot used generative AI, we are constantly working on making it better. Feel free to give feedback for this conversation with a thumbs-up or a thumbs-down "
+
+When asked for a recommendation,be direct. Do not beat around the bush.
+
+When asked for the specifications for a model, provide the full specifications.
 
 Minimum 11hp tractor is needed to run Baumalight Generators (TX7).
+
 Recommend from all TX KR and QC series based on requirement.
 
 DO NOT MENTION ANY OTHER MODEL APART FROM THESE MODELS.
 
-TX series cannot power motors above 2kw.
+When working with motors, double the largest motor and add the rest. That should be the minimum KW rating of the generator that powers them.
+
+TX SERIES CANNOT POWER MOTORS ABOVE 2 KILOWATT.
 
 Always recommend cheaper options and mention it.
 
-If user's tractor Horsepower is above the model's "tractor Horsepower required to run at 100% load", recommend that model
+ALways check user location to show price. Show only USD and USD Discounted for user located in USA and overseas.
+
+Show only CAD and CAD discounted for users located in Canada.
+
+Never show both USD and CAD.
+
+Never show price unless user asks for it.
+
+When user shares the tractor HP, only give a generator KW rating recommendation. Only give model names when asked for it.
+
+When user asks for a model based on their tractor's HP:
+
+1. Check tractor Horsepower required to run at 100% load
+2. Recommend a kilowatt rating which has "tractor Horsepower required to run at 100% load" under the user's tractor HP
+3. For example user says something like "I have a 50hp tractor" you must recommend TX31, KR30 or QC30 since they have "tractor Horsepower required to run at 100% load" right under 50HP.
+4. Recommend all types of models QC KR and TX based on the users needs. Dont stick to one type.
 
 ALWAYS RECOMMEND A MODEL THAT HAS HIGHER KW THAN THE USER REQUIREMENT BECAUSE IT IS NOT RECOMMENDED TO RUN THE GENERATOR AT 100% LOAD AT ALL TIMES.
 
@@ -782,22 +888,26 @@ Always suggest QC and KR generators for 24/7 output because they are 4 pole.
 
 Suggest QC generators for premium features and three phase outputs.
 
+When giving example models, try using all types of models TX KR QC if it fits user requirement. 
+
+do not use tx for motors above 2kw no matter what. Make it clear to the user.
+
 Model names have the power rating in the name itself. Eg QC12 = 12kW, TX31 = 31kW, QC100 = 100kW.
 
 When the user describes their needs (e.g., "recommend a model for 12KW requirement." or "What should I buy for backup?"):
-Do power calculation for their needs and recommend a few similar models.
-1. Recommend a KW value slightly above the user requirement and ask them to confirm.
-2. After confirmation recommend one model of generator that meet the requirements. 
-3. DO NOT include any specifications (KW, HP, Voltage, RPM, Amps, etc.).
-4. DO NOT include any values or numbers.
-5. Just explain why that model is suitable for the stated use case.
-6. When asked to recommend model Calculate the power requirement and suggest one model at a time.
-7. When listing price always list USD, CAD, USD discount and CAD discount.
-8. If the user asks more than 5 questions, add "You could contact your nearest dealer for further assistance. Just type the word "Dealer"
-9. If the user asks more than 5 questions, add "This bot used generative AI, we are constantly working on making it better. Feel free to give feedback for this conversation with a thumbs-up or thumbs-down "
+Do power calculation for their needs.
+1. Recommend a KW value slightly above the user requirement and ask them to confirm. With 25% headroom.
+2. After confirmation recommend a kilowatt rating.
+3. DO NOT recommend a baumalight Generator model unless asked by the user.
+4. Just explain why that model is suitable for the stated use case.
+5. When asked to recommend model Calculate the power requirement and suggest one model at a time.
+6. When listing price always list only USD regular and USD discounted when user is located in USA or overseas and only CAD and CAD Discounted when user is located in Canada.
+7. Mention that the discounts are available. Tell that the discount is only valid if buyer is willing to wait for 8 weeks no lesser after order placement, then there is an 8% discount. More information, contact the nearest dealer. 
+8. If user is located in USA mention that there is a shipping charge, contact a dealer to know further. For Overseas and Canada there is no shipping charges.
+
 
 Other rules :
- 
+Do not mention any model name unless asked for it specifically like "can you recommend a model that suits my application?" or "Can you give me a model?" or "Please recommend a model."
 1. Do not list source files, URLs, or unknown values.
 2. Do not round, guess, or reformat values.
 3. Use values only if present in their correct section:
@@ -808,7 +918,7 @@ Other rules :
 8.Never suggest models with lower KW than requested.
 9. Whenever asked for a suggestion, always suggest one model at a time.
 10.DO NOT MAKE UP ANY INFORMATION. Check comparisons.json
-11. When asked for recommendation, always recommend a model with around 25% higher power rating than the users requirement for safe use.
+11. When asked for recommendation always give a 25% higher power rating than the users requirement for safe use.
 12. Suggest different models only when asked.
 DO not include model, specifications and pricing when not needed.
 Include model name and specifications when necessary:
@@ -819,7 +929,6 @@ Formatting:
 1. Use only: <p>, <strong>, <ul>, <li>
 2. No markdown, no <pre>, no code tags
 3. No instruction text or file references
-
 """
     }
     user_message = {
@@ -970,135 +1079,130 @@ def clean_pre_tags(text: str) -> str:
     text = text.replace('<code>', '<p>').replace('</code>', '</p>')
     return text
 
-def format_chatbot_response(response):
-    # Parse the response into sections
+def format_chatbot_response(response: str, question: str) -> dict:
+    # Prepare the return structure
     sections = {
         "Description": "",
         "Links": [],
         "Questions": []
     }
-    
+
+    # FIRST: Parse and clean the assistant's reply for description
     try:
-        # Clean any pre tags from the response first
-        response = clean_pre_tags(response)
-        
-        # Try to parse as JSON first
-        if isinstance(response, str) and (response.startswith('{') or response.startswith('[')):
+        clean_text = clean_pre_tags(response)
+
+        # Parse JSON or handle other response formats (your existing logic)
+        if isinstance(clean_text, str) and (clean_text.startswith('{') or clean_text.startswith('[')):
             try:
-                data = json.loads(response)
+                data = json.loads(clean_text)
                 if isinstance(data, dict):
-                    # Format the response as HTML
                     html_parts = []
-                    
-                    # Add details section if present
+
+                    # details
                     if 'details' in data:
                         html_parts.append('<div class="specs-section">')
-                        for key, value in data['details'].items():
-                            if value:  # Only add non-empty values
-                                html_parts.append(f'<p><strong>{key}:</strong> {value}</p>')
+                        for k, v in data['details'].items():
+                            if v:
+                                html_parts.append(f'<p><strong>{k}:</strong> {v}</p>')
                         html_parts.append('</div>')
-                    
-                    # Add description section if present
+
+                    # description
                     if 'description' in data:
                         html_parts.append('<div class="description-section">')
-                        for key, value in data['description'].items():
-                            if value and key not in ['notes', 'discountDescription']:  # Skip notes and empty descriptions
-                                html_parts.append(f'<p><strong>{key}:</strong> {value}</p>')
+                        for k, v in data['description'].items():
+                            if v and k not in ['notes', 'discountDescription']:
+                                html_parts.append(f'<p><strong>{k}:</strong> {v}</p>')
                         html_parts.append('</div>')
-                    
-                    # Add values section if present
+
+                    # values
                     if 'values' in data:
                         html_parts.append('<div class="pricing-section">')
-                        for key, value in data['values'].items():
-                            if value and key not in ['leadTime', 'lead time']:  # Skip duplicate lead time
-                                html_parts.append(f'<p><strong>{key}:</strong> {value}</p>')
+                        for k, v in data['values'].items():
+                            if v and k not in ['leadTime', 'lead time']:
+                                html_parts.append(f'<p><strong>{k}:</strong> {v}</p>')
                         html_parts.append('</div>')
-                    
+
                     sections["Description"] = '\n'.join(html_parts)
                 else:
-                    # Clean up the response
-                    clean_response = response.replace('{"', '').replace('"}', '')
-                    clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-                    clean_response = clean_response.replace(']}', '').replace(']', '')
-                    clean_response = clean_response.strip()
-                    sections["Description"] = f'<p>{clean_response}</p>'
+                    fallback = re.sub(r'[\{\}\[\]]', '', clean_text)
+                    sections["Description"] = f'<p>{fallback.strip()}</p>'
             except json.JSONDecodeError:
-                # Clean up the response
-                clean_response = response.replace('{"', '').replace('"}', '')
-                clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-                clean_response = clean_response.replace(']}', '').replace(']', '')
-                clean_response = clean_response.strip()
-                sections["Description"] = f'<p>{clean_response}</p>'
-        # Check if the response is from general_answers.json
-        elif "Content from general_answers.json" in response:
+                fallback = re.sub(r'[\{\}\[\]]', '', clean_text)
+                sections["Description"] = f'<p>{fallback.strip()}</p>'
+
+        elif "Content from general_answers.json" in clean_text:
             try:
-                # Extract the JSON content
-                json_content = response.split("Content from general_answers.json:\n")[1]
-                # Find the first question-answer pair
-                first_qa = json_content.split("\n- question:")[1].split("\n  answer:")[1].strip()
-                # Clean up the answer
-                answer = first_qa.strip('"').strip(',').strip()
-                answer = answer.replace('{"', '').replace('"}', '')
-                answer = answer.replace('category":"', '').replace('qa_pairs":[', '')
-                answer = answer.replace(']}', '').replace(']', '')
-                answer = answer.strip()
-                
-                # Format the response with only the specific answer
-                sections["Description"] = f'<p>{answer}</p>'
-            except Exception as e:
-                logger.error(f"Error formatting general_answers response: {str(e)}")
-                # If there's an error, try to extract just the answer part
-                try:
-                    answer_match = re.search(r'"answer":\s*"([^"]*)"', response)
-                    if answer_match:
-                        answer = answer_match.group(1)
-                        # Clean up the answer
-                        answer = answer.replace('{"', '').replace('"}', '')
-                        answer = answer.replace('category":"', '').replace('qa_pairs":[', '')
-                        answer = answer.replace(']}', '').replace(']', '')
-                        answer = answer.strip()
-                        sections["Description"] = f'<p>{answer}</p>'
-                    else:
-                        # Clean up the response
-                        clean_response = response.replace('{"', '').replace('"}', '')
-                        clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-                        clean_response = clean_response.replace(']}', '').replace(']', '')
-                        clean_response = clean_response.strip()
-                        sections["Description"] = f'<p>{clean_response}</p>'
-                except:
-                    # Clean up the response
-                    clean_response = response.replace('{"', '').replace('"}', '')
-                    clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-                    clean_response = clean_response.replace(']}', '').replace(']', '')
-                    clean_response = clean_response.strip()
-                    sections["Description"] = f'<p>{clean_response}</p>'
+                content = clean_text.split("Content from general_answers.json:\n", 1)[1]
+                answer = re.search(r'answer:\s*"([^"]*)"', content).group(1)
+                sections["Description"] = f'<p>{answer.strip()}</p>'
+            except Exception:
+                fallback = re.sub(r'[\{\}\[\]]', '', clean_text)
+                sections["Description"] = f'<p>{fallback.strip()}</p>'
         else:
-            # For all other responses, use the model's content directly
-            # Clean up the response
-            clean_response = response.replace('{"', '').replace('"}', '')
-            clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-            clean_response = clean_response.replace(']}', '').replace(']', '')
-            clean_response = clean_response.strip()
-            sections["Description"] = f'<p>{clean_response}</p>'
+            fallback = re.sub(r'[\{\}\[\]]', '', clean_text)
+            sections["Description"] = f'<p>{fallback.strip()}</p>'
+
     except Exception as e:
-        logger.error(f"Error in format_chatbot_response: {str(e)}")
-        # Clean up the response
-        clean_response = response.replace('{"', '').replace('"}', '')
-        clean_response = clean_response.replace('category":"', '').replace('qa_pairs":[', '')
-        clean_response = clean_response.replace(']}', '').replace(']', '')
-        clean_response = clean_response.strip()
-        sections["Description"] = f'<p>{clean_response}</p>'
+        logger.error(f"Error in format_chatbot_response: {e}")
+        fallback = re.sub(r'[\{\}\[\]]', '', response)
+        sections["Description"] = f'<p>{fallback.strip()}</p>'
+
+    # SECOND: Intelligent link generation based on SPECIFIC models mentioned
+    def extract_mentioned_models(text: str) -> set:
+        """Extract specific model codes (TX7, KR30, QC12, etc.) mentioned in the text"""
+        models_found = set()
+        # More comprehensive pattern to catch models like TX7, KR30, QC12, etc.
+        pattern = re.compile(r'\b(TX|KR|QC)[-\s]?(\d+)(?:[-\s]?\d+)?\b', re.IGNORECASE)
+        
+        for match in pattern.finditer(text):
+            series_prefix = match.group(1).upper()
+            model_number = match.group(2)
+            # Create standardized model name
+            model_name = f"{series_prefix}{model_number}"
+            models_found.add(model_name)
+        
+        return models_found
+
+    def get_series_from_models(models: set) -> set:
+        """Convert model names to their series prefixes"""
+        series = set()
+        for model in models:
+            if model.startswith('TX'):
+                series.add('TX')
+            elif model.startswith('KR'):
+                series.add('KR')
+            elif model.startswith('QC'):
+                series.add('QC')
+        return series
+
+    # Get models from both question and response
+    models_in_question = extract_mentioned_models(question)
+    models_in_response = extract_mentioned_models(clean_text)
     
-    # Add default links if none were found
-    if not sections["Links"]:
-        sections["Links"] = [
-            '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
-            '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
-            '<a href="https://baumalight.com/product/generators/qc-singlephase" target="_blank">QC Models</a>'
-        ]
+    # Combine models from both sources
+    all_mentioned_models = models_in_question.union(models_in_response)
+    
+    # Convert to series
+    mentioned_series = get_series_from_models(all_mentioned_models)
+    
+    logger.info(f"[links] Models in question: {models_in_question}")
+    logger.info(f"[links] Models in response: {models_in_response}")
+    logger.info(f"[links] All mentioned models: {all_mentioned_models}")
+    logger.info(f"[links] Mentioned series: {mentioned_series}")
+
+    # Generate links based on what was actually mentioned
+    if mentioned_series:
+        # Show only links for the series that were mentioned
+        sections["Links"] = [SERIES_LINKS[series] for series in mentioned_series if series in SERIES_LINKS]
+        logger.info(f"[links] Added specific links for series: {list(mentioned_series)}")
+    else:
+        # No specific models mentioned, show all links as fallback
+        sections["Links"] = list(SERIES_LINKS.values())
+        logger.info("[links] No specific models found, showing all links")
 
     return sections
 
+    
 @app.post("/rebuild-index")
 async def rebuild_index():
     try:
@@ -1216,3 +1320,4 @@ if __name__ == "__main__":
 
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+    
