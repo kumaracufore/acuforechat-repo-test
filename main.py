@@ -92,8 +92,65 @@ def count_tokens(text: str) -> int:
     return len(encoding.encode(text))
 
 from collections import defaultdict
+import datetime
+import uuid
 
 chat_history = defaultdict(list)  # {ip_address: [summary1, summary2, ...]}
+
+def save_conversation_log(session_id: str, role: str, content: str, request: Request = None):
+    """
+    Save conversation logs to files in the logs directory.
+    Creates date-based subdirectories and session-based log files.
+    """
+    try:
+        # Create logs directory if it doesn't exist
+        logs_dir = "logs"
+        if not os.path.exists(logs_dir):
+            os.makedirs(logs_dir)
+        
+        # Create date-based subdirectory
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+        date_dir = os.path.join(logs_dir, today)
+        if not os.path.exists(date_dir):
+            os.makedirs(date_dir)
+        
+        # Generate log filename with session ID (consistent for the session)
+        log_filename = f"{session_id}.json"
+        log_path = os.path.join(date_dir, log_filename)
+        
+        # Prepare log entry
+        log_entry = {
+            "role": role,
+            "content": content,
+            "timestamp": datetime.datetime.now().isoformat() + "Z",
+            "session_id": session_id
+        }
+        
+        # Add request information if available
+        if request:
+            log_entry["ip"] = request.client.host if request.client else "unknown"
+            log_entry["user_agent"] = request.headers.get("user-agent", "unknown")
+        
+        # Load existing logs or create new list
+        existing_logs = []
+        if os.path.exists(log_path):
+            try:
+                with open(log_path, 'r', encoding='utf-8') as f:
+                    existing_logs = json.load(f)
+            except (json.JSONDecodeError, FileNotFoundError):
+                existing_logs = []
+        
+        # Add new log entry
+        existing_logs.append(log_entry)
+        
+        # Save updated logs
+        with open(log_path, 'w', encoding='utf-8') as f:
+            json.dump(existing_logs, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"Conversation log saved: {log_path}")
+        
+    except Exception as e:
+        logger.error(f"Error saving conversation log: {str(e)}")
 
 # === CONFIG ===
 openai.api_key = ""
@@ -637,14 +694,19 @@ async def ask_bot(request: Request):
 
 
 
+        # Save user message to log
+        save_conversation_log(session_id, "user", question, request)
+        
         # Push the new user message onto their history
         chat_history[session_id].append({"role": "user", "content": question})
 
         # Handle empty questions
         if not question:
+            empty_response = "Please provide a question or message."
+            save_conversation_log(session_id, "assistant", empty_response, request)
             return {
                 "response": json.dumps({
-                    "Description": "Please provide a question or message.",
+                    "Description": empty_response,
                     "Links": [],
                     "Questions": ["What would you like to know about our products?"]
                 })
@@ -653,9 +715,11 @@ async def ask_bot(request: Request):
         # Check for simple greetings first
         greeting_words = ["hi", "hello", "hey", "good morning", "good afternoon", "good evening"]
         if question.lower().strip() in greeting_words:
+            greeting_response = "Hi! How can I help you with Baumalight products today? I can provide information about our generators, help you compare models, or find a dealer near you."
+            save_conversation_log(session_id, "assistant", greeting_response, request)
             return {
                 "response": json.dumps({
-                    "Description": "Hi! How can I help you with Baumalight products today? I can provide information about our generators, help you compare models, or find a dealer near you.",
+                    "Description": greeting_response,
                     "Links": [
                         '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
                         '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
@@ -671,9 +735,11 @@ async def ask_bot(request: Request):
 
         if is_dealer or postal_code:
             if not postal_code:
+                dealer_prompt_response = "I can help you find the nearest dealers. Could you please provide your postal/ZIP code?"
+                save_conversation_log(session_id, "assistant", dealer_prompt_response, request)
                 return {
                     "response": json.dumps({
-                        "Description": "I can help you find the nearest dealers. Could you please provide your postal/ZIP code?",
+                        "Description": dealer_prompt_response,
                         "Links": [
                             '<a href="https://baumalight.com/product/locator" target="_blank">Dealer Locator</a>'
                         ],
@@ -683,9 +749,11 @@ async def ask_bot(request: Request):
 
             nearest_dealers = find_nearest_dealers(postal_code)
             if not nearest_dealers:
+                no_dealer_response = f"I notice you're looking from {postal_code}. Currently, our dealers are located in North America. Please visit our dealer locator page for more information."
+                save_conversation_log(session_id, "assistant", no_dealer_response, request)
                 return {
                     "response": json.dumps({
-                        "Description": f"I notice you're looking from {postal_code}. Currently, our dealers are located in North America. Please visit our dealer locator page for more information.",
+                        "Description": no_dealer_response,
                         "Links": [
                             '<a href="https://baumalight.com/product/locator" target="_blank">Dealer Locator</a>'
                         ],
@@ -694,6 +762,9 @@ async def ask_bot(request: Request):
                 }
 
             dealer_info = format_dealer_response(nearest_dealers, postal_code)
+            # Extract the description from dealer_info for logging
+            dealer_description = dealer_info.get("Description", "Dealer information provided")
+            save_conversation_log(session_id, "assistant", dealer_description, request)
             return {"response": json.dumps(dealer_info)}
 
         # Check for model comparison
@@ -702,6 +773,9 @@ async def ask_bot(request: Request):
             models_to_compare = extract_specific_models(question)
             comparison_response = generate_model_comparison(models_to_compare)
             if comparison_response:
+                # Extract description from comparison response for logging
+                comparison_description = comparison_response.get("Description", "Model comparison provided")
+                save_conversation_log(session_id, "assistant", comparison_description, request)
                 return {"response": json.dumps(comparison_response)}
 
         # Get model data and relevant chunks
@@ -711,9 +785,11 @@ async def ask_bot(request: Request):
         if not relevant_chunks and not model_data["models"]:
                      series = extract_series_from_query(question)
                      links  = [SERIES_LINKS[p] for p in series] or list(SERIES_LINKS.values())
+                     series_response = "I can help you with information about our generator series. Please check the links below for specific model information."
+                     save_conversation_log(session_id, "assistant", series_response, request)
                      return {
                         "response": json.dumps({
-                          "Description": "I can help you with information...",
+                          "Description": series_response,
                           "Links": links,
                           "Questions": []
                 })
@@ -723,6 +799,9 @@ async def ask_bot(request: Request):
         context = build_context(relevant_chunks)
         bot_reply = get_openai_response(session_id, question, context)
 
+        # Save assistant's reply to log
+        save_conversation_log(session_id, "assistant", bot_reply, request)
+        
         # Append the assistant's reply so next turn sees it
         chat_history[session_id].append({"role": "assistant", "content": bot_reply})
         formatted_response = format_chatbot_response(bot_reply, question)
@@ -730,9 +809,11 @@ async def ask_bot(request: Request):
 
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
+        error_response = "We ran into an error, please retry! I can provide information about our generator models, compare different models, or help you find a dealer. What would you like to know?"
+        # Note: We don't log error responses to avoid cluttering logs with errors
         return {
             "response": json.dumps({
-                "Description": "We ran into an error, please retry! I can provide information about our generator models, compare different models, or help you find a dealer. What would you like to know?",
+                "Description": error_response,
                 "Links": [
                     '<a href="https://baumalight.com/product/generators/tx-models" target="_blank">TX Models</a>',
                     '<a href="https://baumalight.com/product/generators/kr-models" target="_blank">KR Models</a>',
