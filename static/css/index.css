@@ -81,7 +81,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 90px;
+    height: 70px;
 }
 
 .chat-title-container {
@@ -98,11 +98,11 @@ body {
 }
 
 .chatbox-messages {
-    max-height: 630px;
+    max-height: 800px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    height: calc(73vh - 107px);
+    height: calc(80vh - 50px);
 }
 
 .chatbox-input {
@@ -278,18 +278,10 @@ body {
     color: #999;
 }
 
-.baumalight-logo {
-    margin-top: -1.8rem;
-    margin-left: 35px;
-}
 
-.baumalight-image {
-    width: 330px;
-}
 
 .acufore-trademark {
-    margin-bottom: 5px;
-    bottom: -3px;
+    margin-left: 10px;
     cursor: default;
     font-size: 12px;
     font-weight: 400;
@@ -297,10 +289,10 @@ body {
     font-style: normal;
     display: flex;
     text-align: center;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 400px;
-    color: #424650;
+    width: 300px;
+    color: #ffffff;
 }
 
 .acufore-trademark button {
@@ -729,9 +721,6 @@ img.link-icon {
     text-align: center;
 }
 
-.close-minimize {
-    margin-top: -22px;
-}
 
 .chatbox-messages {
     overflow-y: auto;
@@ -989,4 +978,336 @@ a {
     height: 55px !important;
     max-height: 55px !important;
     overflow-y: hidden !important;
+}
+
+.chatbox-messages {
+    position: relative;
+    overflow-y: auto;
+}
+
+.message-loader {
+    width: 60px;
+    margin: 10px 0 0 10px;
+    /* 10px from left, some margin on top */
+    background: transparent;
+    text-align: left;
+    pointer-events: none;
+    z-index: 1;
+    position: static;
+    /* Not absolute! */
+}
+
+.chatbox-input {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    z-index: 20;
+}
+
+/* Example for all mobile breakpoints (adjust values as needed) */
+@media (max-width: 600px) {
+    .chatbox {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        height: 85vh !important;
+        max-height: 85vh !important;
+        left: 2.5vw !important;
+        right: auto !important;
+        top: 65px !important;
+        bottom: auto !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+        z-index: 1000;
+    }
+
+    .chatbox-header {
+        height: 60px !important;
+        font-size: 16px !important;
+        border-radius: 0 !important;
+    }
+
+    .chatbox-messages {
+        max-height: calc(100vh - 130px) !important;
+        height: calc(90vh - 130px) !important;
+        padding-bottom: 10px;
+    }
+
+    .chatbox-input {
+        min-height: 60px !important;
+        padding: 8px 10px 20px 10px !important;
+    }
+
+    .chatbox-input textarea {
+        font-size: 14px !important;
+        height: 45px !important;
+        padding: 12px 40px 12px 12px !important;
+    }
+
+    .chat-toggle-btn {
+        width: 45px !important;
+        height: 45px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .alert {
+        right: 10px !important;
+        left: 10px !important;
+        max-width: 95vw !important;
+        font-size: 13px !important;
+        padding: 10px 10px !important;
+    }
+
+    .clear-popup,
+    .clear-conversation-popup,
+    .modal-content {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        margin: 0 auto !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    body {
+        background-image: none !important;
+        background-color: #f0f0f0 !important;
+    }
+
+}
+
+/* For devices up to 280px wide */
+@media (max-width: 280px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 60px !important;
+        right: 10px !important;
+        bottom: 5px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 32px !important;
+        height: 32px !important;
+        right: 24px !important;
+        bottom: 20px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* For devices 281px to 320px wide */
+@media (min-width: 281px) and (max-width: 320px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 70px !important;
+        right: 12px !important;
+        bottom: 7px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 36px !important;
+        height: 36px !important;
+        right: 29px !important;
+        bottom: 27px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+/* For devices 321px to 375px wide */
+@media (min-width: 321px) and (max-width: 375px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 80px !important;
+        right: 15px !important;
+        bottom: 8px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 40px !important;
+        height: 40px !important;
+        right: 35px !important;
+        bottom: 30px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 22px !important;
+        height: 22px !important;
+    }
+}
+
+/* For devices 376px to 420px wide */
+@media (min-width: 376px) and (max-width: 420px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 90px !important;
+        right: 18px !important;
+        bottom: 10px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 44px !important;
+        height: 44px !important;
+        right: 40px !important;
+        bottom: 36px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+
+/* For devices 421px to 475px wide */
+@media (min-width: 421px) and (max-width: 475px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 100px !important;
+        right: 20px !important;
+        bottom: 12px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 48px !important;
+        height: 48px !important;
+        right: 45px !important;
+        bottom: 42px !important;
+    }
+
+    .chat-toggle-btn img {
+        width: 26px !important;
+        height: 26px !important;
+    }
+}
+
+/* For devices 476px to 600px wide */
+@media (min-width: 476px) and (max-width: 600px) {
+    .chatbot-rotation-image img {
+        position: fixed !important;
+        width: 110px !important;
+        right: 25px !important;
+        bottom: 15px !important;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    .chat-toggle-btn {
+        width: 50px !important;
+        height: 50px !important;
+        right: 54px !important;
+        bottom: 49px !important;
+    }
+
+
+    .chat-toggle-btn img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
+
+@media (max-width: 403px) {
+    .chatbox-header {
+        padding: 6px 8px !important;
+        height: 62px !important;
+    }
+
+    .chat-title-container img {
+        max-width: 60vw !important;
+        height: auto !important;
+        min-width: 0 !important;
+    }
+
+    .chat-title-container {
+        min-width: 0 !important;
+        max-width: 65vw !important;
+        overflow: hidden !important;
+    }
+
+    .minimize-btn,
+    #close-chat {
+        font-size: 1.2rem !important;
+        margin-right: 8px !important;
+        margin-left: 4px !important;
+    }
+
+    .chatbox-header {
+        flex-wrap: nowrap !important;
+    }
+
+    .acufore-trademark {
+        font-size: 10px !important;
+        padding: 2px 4px !important;
+        max-width: 90vw !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    .acufore-trademark img {
+        height: 12px !important;
+        width: auto !important;
+        margin-left: 2px !important;
+    }
+}
+
+@media (max-width: 340px) {
+    .acufore-trademark {
+        font-size: 8.5px !important;
+        padding: 1px 2px !important;
+        max-width: 85vw !important;
+    }
+
+    .acufore-trademark img {
+        height: 10px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .timestamp-feedback-container {
+        gap: 8rem !important;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 375px) {
+    .timestamp-feedback-container {
+        gap: 9.75rem !important;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 420px) {
+    .timestamp-feedback-container {
+        gap: 11.5rem !important;
+    }
+}
+
+@media (min-width: 421px) and (max-width: 475px) {
+    .timestamp-feedback-container {
+        gap: 12.25rem !important;
+    }
+}
+
+@media (min-width: 476px) and (max-width: 600px) {
+    .timestamp-feedback-container {
+        gap: 17rem !important;
+        max-width: 532px;
+    }
 }

@@ -1,2 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Track changes to .gitattributes with logs
+*.py text eol=lf
+*.json text eol=lf
+*.pkl binary
+*.env text eol=lf
+*.log text eol=lf
+logs/* text eol=lf

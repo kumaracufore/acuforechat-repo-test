@@ -4,6 +4,11 @@ document.getElementById("toggle-chat").addEventListener("click", function () {
     chatbox.style.display === "none" || chatbox.style.display === ""
       ? "block"
       : "none";
+  // Focus the input when chatbox is shown
+  if (chatbox.style.display === "block") {
+    const messageInput = document.getElementById("message-input");
+    if (messageInput) messageInput.focus();
+  }
 });
 
 document.getElementById("close-chat").addEventListener("click", function () {
@@ -76,8 +81,17 @@ function addMessage({ content, type, messageType = "responses" }) {
     messageDiv.textContent = content;
   }
 
-  messageContainer.appendChild(messageDiv);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageDiv, loader);
+  } else {
+    messageContainer.appendChild(messageDiv);
+  }
+  if (messageType === "input" || messageType === "dropdown") {
+    setTimeout(() => {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }, 0);
+  }
 }
 
 function addMessageLinks(links, type) {
@@ -88,6 +102,7 @@ function addMessageLinks(links, type) {
       (Array.isArray(links) && links.length > 0))
   ) {
     const messageContainer = document.getElementById("messages");
+    const loader = document.getElementById("message-loader");
 
     const messageDiv = document.createElement("div");
     messageDiv.className = `message-daq ${type}`;
@@ -103,14 +118,19 @@ function addMessageLinks(links, type) {
     linkContent += `</ul>`;
     messageDiv.innerHTML = linkContent;
 
-    messageContainer.appendChild(messageDiv);
-    messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(messageDiv, loader);
+    } else {
+      messageContainer.appendChild(messageDiv);
+    }
+    // Removed scrollTop logic
   }
 }
 
 function addMessageDescription(message, type) {
   if (message && message.trim()) {
     const messageContainer = document.getElementById("messages");
+    const loader = document.getElementById("message-loader");
     const messageDiv = document.createElement("div");
     messageDiv.className = `message-daq ${type}`;
 
@@ -120,8 +140,13 @@ function addMessageDescription(message, type) {
       words.length > 180 ? words.slice(0, 180).join(" ") + "..." : message;
 
     messageDiv.innerHTML = `<p>${limitedMessage}</p>`;
-    messageContainer.appendChild(messageDiv);
-    messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(messageDiv, loader);
+    } else {
+      messageContainer.appendChild(messageDiv);
+    }
+    messageContainer.scrollTop += 10;
+    // Removed scroll-to-bottom for answers as per user request
   }
 }
 
@@ -140,8 +165,13 @@ function addMessageQuestion(questions, type) {
       messageDiv.appendChild(button);
     });
 
-    messageContainer.appendChild(messageDiv);
-    messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+    const loader = document.getElementById("message-loader");
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(messageDiv, loader);
+    } else {
+      messageContainer.appendChild(messageDiv);
+    }
+    messageContainer.scrollTop += 10;
   }
 }
 
@@ -159,8 +189,14 @@ function addMessageDefault() {
         <button class="clickable-question statement-container1" data-question="Would you prefer leasing or purchasing with financing options?">Would you prefer leasing or purchasing with financing options?</button>
     `;
 
-  messageContainer.appendChild(messageDiv);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageDiv, loader);
+  } else {
+    messageContainer.appendChild(messageDiv);
+  }
+  messageContainer.scrollTop += 10;
+  // Removed scrollTop logic
 }
 
 function sendMessage(event) {
@@ -256,11 +292,14 @@ function sendMessage(event) {
         timestampContainer.appendChild(feedbackIcons);
 
         // Append the container to the message container
-        messageContainer.appendChild(timestampContainer);
+        const loader = document.getElementById("message-loader");
+        if (loader && loader.parentNode === messageContainer) {
+          messageContainer.insertBefore(timestampContainer, loader);
+        } else {
+          messageContainer.appendChild(timestampContainer);
+        }
 
-        setTimeout(() => {
-          messageContainer.scrollTop = messageContainer.scrollHeight - 5;
-        }, 100);
+        // Removed scrollTop logic
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -280,7 +319,12 @@ function addBotResponse(content, messageContainer) {
 
   botResponse.appendChild(botMessage);
 
-  messageContainer.appendChild(botResponse);
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(botResponse, loader);
+  } else {
+    messageContainer.appendChild(botResponse);
+  }
 }
 
 function isJSON(str) {
@@ -552,8 +596,15 @@ function addMessage(message, type, messageType = "responses") {
     messageDiv.textContent = content;
   }
 
-  messageContainer.appendChild(messageDiv);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageDiv, loader);
+  } else {
+    messageContainer.appendChild(messageDiv);
+  }
+  if (messageType === "input" || messageType === "dropdown") {
+    // Removed scrollTop logic
+  }
 }
 
 function handleMessage(message, isUserMessage) {
@@ -565,7 +616,7 @@ function handleMessage(message, isUserMessage) {
     addBotResponse(message, messageContainer);
   }
 
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  // Removed scrollTop logic
 }
 
 function addUserMessage(content, messageContainer) {
@@ -583,7 +634,15 @@ function addUserMessage(content, messageContainer) {
   messageWrapper.appendChild(messageDiv);
   messageWrapper.appendChild(timestampElement);
 
-  messageContainer.appendChild(messageWrapper);
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageWrapper, loader);
+  } else {
+    messageContainer.appendChild(messageWrapper);
+  }
+  setTimeout(() => {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }, 0);
 }
 
 // Define static responses for dropdown items
@@ -664,8 +723,15 @@ function addMessage(message, isUserMessage) {
           isUserMessage ? "timestamp-right" : "timestamp-left"
         }">${getCurrentTime()}</div>
     `;
-  messageContainer.appendChild(messageElement);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageElement, loader);
+  } else {
+    messageContainer.appendChild(messageElement);
+  }
+  setTimeout(() => {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }, 0);
 }
 
 // Keep your existing dropdownResponses object
@@ -688,6 +754,10 @@ function handleDropdownItemClick(event) {
   addDropdownMessage(itemText, "sender1", messageContainer);
 
   displayStaticResponse(itemText, messageContainer);
+
+  // Ensure input is always focused after clicking a dropdown item
+  const messageInput = document.getElementById("message-input");
+  if (messageInput) messageInput.focus();
 }
 
 function addDropdownMessage(content, type, messageContainer) {
@@ -697,9 +767,16 @@ function addDropdownMessage(content, type, messageContainer) {
   const timestampElement = document.createElement("div");
   timestampElement.className = "message-timestamp timestamp-right";
   timestampElement.textContent = getCurrentTime();
-  messageContainer.appendChild(messageDiv);
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageDiv, loader);
+  } else {
+    messageContainer.appendChild(messageDiv);
+  }
   messageContainer.appendChild(timestampElement);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  setTimeout(() => {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }, 0);
 }
 
 function handleQuestionClick(event) {
@@ -713,6 +790,10 @@ function handleQuestionClick(event) {
 
     // Display the static response for this question
     displayStaticResponse(question, messageContainer);
+
+    // Ensure input is always focused after clicking a question
+    const messageInput = document.getElementById("message-input");
+    if (messageInput) messageInput.focus();
   }
 }
 
@@ -723,9 +804,16 @@ function addMessageAsSender1(content, messageContainer) {
   const timestampElement = document.createElement("div");
   timestampElement.className = "message-timestamp timestamp-right";
   timestampElement.textContent = getCurrentTime();
-  messageContainer.appendChild(messageDiv);
+  const loader = document.getElementById("message-loader");
+  if (loader && loader.parentNode === messageContainer) {
+    messageContainer.insertBefore(messageDiv, loader);
+  } else {
+    messageContainer.appendChild(messageDiv);
+  }
   messageContainer.appendChild(timestampElement);
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  setTimeout(() => {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }, 0);
 }
 
 function displayStaticResponse(itemText, messageContainer) {
@@ -791,7 +879,13 @@ function displayStaticResponse(itemText, messageContainer) {
     }
 
     // Append the new response container to the message container
-    messageContainer.appendChild(responseContainer);
+    const loader = document.getElementById("message-loader");
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(responseContainer, loader);
+    } else {
+      messageContainer.appendChild(responseContainer);
+    }
+    messageContainer.scrollTop += 10;
 
     // Create a container for timestamp and feedback icons
     const timestampContainer = document.createElement("div");
@@ -815,10 +909,14 @@ function displayStaticResponse(itemText, messageContainer) {
     timestampContainer.appendChild(feedbackIcons);
 
     // Append the container to the message container
-    messageContainer.appendChild(timestampContainer);
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(timestampContainer, loader);
+    } else {
+      messageContainer.appendChild(timestampContainer);
+    }
 
-    // Scroll to the bottom of the chat
-    messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+    // // Scroll to the bottom of the chat
+    // messageContainer.scrollTop += 2; // This line is removed as per the edit hint
   } else {
     // If no response found, add a default message
     const defaultMessageDiv = document.createElement("div");
@@ -846,11 +944,17 @@ function displayStaticResponse(itemText, messageContainer) {
     timestampContainer.appendChild(feedbackIcons);
 
     // Append the container to the message container
-    messageContainer.appendChild(defaultMessageDiv);
+    const loader = document.getElementById("message-loader");
+    if (loader && loader.parentNode === messageContainer) {
+      messageContainer.insertBefore(defaultMessageDiv, loader);
+    } else {
+      messageContainer.appendChild(defaultMessageDiv);
+    }
+    messageContainer.scrollTop += 10;
     messageContainer.appendChild(timestampContainer);
-    messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+    // Removed scrollTop logic
   }
-  messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+  // Removed scrollTop logic
 }
 
 // Modified DOMContentLoaded event listener
@@ -918,12 +1022,17 @@ document.addEventListener("click", function (event) {
           : "Sorry to hear that! We value your feedback.";
 
       const messageContainer = document.getElementById("messages");
-      messageContainer.appendChild(feedbackMessage);
+      const loader = document.getElementById("message-loader");
+      if (loader && loader.parentNode === messageContainer) {
+        messageContainer.insertBefore(feedbackMessage, loader);
+      } else {
+        messageContainer.appendChild(feedbackMessage);
+      }
 
       // Remove all feedback icons after clicking
       removeFeedbackIcons();
 
-      messageContainer.scrollTop = messageContainer.scrollHeight - 5;
+      // messageContainer.scrollTop += 2; // This line is removed as per the edit hint
     }
   }
 });
@@ -1025,7 +1134,7 @@ document.getElementById("send-button").addEventListener("click", () => {
     messageInput.setSelectionRange(0, 0);
     messageInput.rows = 1;
     messageInput.style.height = "55px";
-    messageInput.focus();
+    messageInput.focus(); // Ensure input is always focused after sending
     console.log(
       "After clear:",
       JSON.stringify(messageInput.value),
@@ -1036,6 +1145,8 @@ document.getElementById("send-button").addEventListener("click", () => {
     // Simulate bot response (replace with your actual bot response logic)
     setTimeout(() => {
       addMessage(`Response to: ${message}`, false);
+      // Ensure input is always focused after bot response
+      messageInput.focus();
     }, 1000);
   }
 });
@@ -1092,3 +1203,11 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Ensure input is focused when the page loads for the first time
+// This should be at the end of the file to avoid conflicts
+
+document.addEventListener("DOMContentLoaded", function () {
+  const messageInput = document.getElementById("message-input");
+  if (messageInput) messageInput.focus();
+});

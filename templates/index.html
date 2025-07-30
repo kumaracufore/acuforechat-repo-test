@@ -42,7 +42,32 @@
     <div class="chatbox chat-container" id="chatbox">
       <div class="chatbox-header">
         <div class="chat-title-container">
-          <h5 class="mb-0 small-chat-title">Baumalight AI ChatBot</h5>
+          <div class="baumalight-logo">
+            <img
+              src="./static/images/baumalight-logo.png"
+              alt="baumalight-logo"
+              class="baumalight-image"
+            />
+          </div>
+          <div class="acufore-trademark">
+            <a
+              href="https://www.acufore.com/analytics-data"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="
+                font-size: 0.6rem;
+                text-decoration: none;
+                color: rgb(255, 255, 255);
+                font-weight: 400;
+              "
+              >AI Chatbot - Powered by Acufore&reg;</a
+            >
+            <img
+              src="./static/images/acufore-favicon.png"
+              alt="acufore-favicon"
+              class="acufore-favicon"
+            />
+          </div>
         </div>
         <div class="close-minimize">
           <button type="button" id="minimize-chat" class="minimize-btn">
@@ -56,32 +81,7 @@
           ></button>
         </div>
       </div>
-      <div class="baumalight-logo">
-        <img
-          src="./static/images/baumalight-logo.png"
-          alt="baumalight-logo"
-          class="baumalight-image"
-        />
-      </div>
-      <div class="acufore-trademark">
-        <a
-          href="https://www.acufore.com/analytics-data"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            font-size: 0.8rem;
-            text-decoration: none;
-            color: black;
-            font-weight: 400;
-          "
-          >Powered by Acufore&reg;</a
-        >
-        <img
-          src="./static/images/acufore-favicon.png"
-          alt="acufore-favicon"
-          class="acufore-favicon"
-        />
-      </div>
+
       <div class="chatbox-messages" id="messages">
         <div class="welcome-container">
           <div class="message-welcome">Welcome to Baumalight</div>
@@ -205,17 +205,16 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="message-loader" id="message-loader" style="display: none">
-        <div class="chat-bubble">
-          <div class="typing">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+        <div class="message-loader" id="message-loader" style="display: none">
+          <div class="chat-bubble">
+            <div class="typing">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
           </div>
         </div>
       </div>
-      <div id="messages" class="message-container"></div>
       <div class="clear-popup" style="display: none">
         <div class="clear-conversation-popup">
           <div class="popup-content">
